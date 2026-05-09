@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vijay Anandasamy – Experiencepreneur</title>
-<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/mobile%20favicon.png">
+<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Website%20logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,600;1,700&display=swap" rel="stylesheet">
@@ -810,7 +810,7 @@ nav > * { pointer-events:auto; }
 /* Blank media slots: embedded images/videos were removed to keep the HTML lightweight.
    Add local paths back into src="" when ready. */
 img[data-media-slot] {
-  visibility: hidden !important;
+  visibility: visible !important;
 }
 video[data-media-slot] {
   visibility: visible !important;
@@ -1152,8 +1152,8 @@ nav { top: 18px !important; }
 /* Reduce Beyond portfolio photo vertical length */
 #beyond .beyond-photo,
 #beyond .beyond-photo.media-provision {
-  min-height: 560px !important;
-  height: 560px !important;
+  min-height: 720px !important;
+  height: 720px !important;
   aspect-ratio: auto !important;
 }
 
@@ -1186,10 +1186,10 @@ nav { top: 18px !important; }
 }
 #beyond .beyond-photo,
 #beyond .beyond-photo.media-provision {
-  width: 75% !important;
-  max-width: 75% !important;
-  min-height: 560px !important;
-  height: 560px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: 720px !important;
+  height: 720px !important;
   aspect-ratio: auto !important;
 }
 
@@ -1197,20 +1197,23 @@ nav { top: 18px !important; }
 .hero-right {
   display: block !important;
   position: absolute !important;
-  top: 10vh !important;
+  top: 0 !important;
   right: 0 !important;
-  width: 50vw !important;
-  height: 80vh !important;
+  width: 62.5vw !important;
+  height: 100vh !important;
   background: transparent !important;
   z-index: 0 !important;
   overflow: hidden !important;
   pointer-events: none !important;
 }
+.hero-right::before {
+  width: 340px !important;
+}
 .hero-char-video {
   width: 100% !important;
   height: 100% !important;
   object-fit: contain !important;
-  object-position: center center !important;
+  object-position: right center !important;
 }
 
 /* Keep quote visually aligned with the 3D model eye-level area */
@@ -1282,16 +1285,16 @@ nav { top: 18px !important; }
 }
 
 .skills-wrap {
-  min-height: 82vh !important;
-  height: 82vh !important;
-  max-height: 82vh !important;
+  min-height: 80vh !important;
+  height: 80vh !important;
+  max-height: 80vh !important;
   position: relative !important;
   overflow: visible !important;
   margin-bottom: 0 !important;
 }
 
 .skills-video-bg {
-  height: 82vh !important;
+  height: 80vh !important;
 }
 
 .skill-orbs {
@@ -1674,7 +1677,6 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
       <div class="skills-video-bg" data-media-slot="skills-loop-video">
         <video autoplay muted loop playsinline preload="metadata">
           <source src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/sill%20section%20video.mp4" type="video/mp4">
-          <source src="./assets/skills-loop.mp4" type="video/mp4">
         </video>
       </div>
       <div class="skill-orbs">
