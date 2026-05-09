@@ -1272,6 +1272,199 @@ nav { top: 18px !important; }
   }
 }
 
+
+/* Final Skills section collision fix — keeps skills within one fold without cramping */
+#skill {
+  padding-top: 48px !important;
+  padding-bottom: 96px !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.skills-wrap {
+  min-height: 82vh !important;
+  height: 82vh !important;
+  max-height: 82vh !important;
+  position: relative !important;
+  overflow: visible !important;
+  margin-bottom: 0 !important;
+}
+
+.skills-video-bg {
+  height: 82vh !important;
+}
+
+.skill-orbs {
+  position: absolute !important;
+  inset: 0 !important;
+  height: 100% !important;
+}
+
+/* Repositioned skill pills: balanced 8-row layout inside one web fold */
+.sp1 { top: 4% !important; left: 4% !important; }
+.sp2 { top: 16% !important; left: 10% !important; }
+.sp3 { top: 28% !important; left: 5% !important; }
+.sp4 { top: 40% !important; left: 12% !important; }
+.sp5 { top: 52% !important; left: 4% !important; }
+.sp6 { top: 64% !important; left: 11% !important; }
+.sp7 { top: 76% !important; left: 6% !important; }
+.sp8 { top: 88% !important; left: 13% !important; transform: translateY(-100%) !important; }
+
+.sp9  { top: 4% !important; right: 5% !important; }
+.sp10 { top: 16% !important; right: 12% !important; }
+.sp11 { top: 28% !important; right: 4% !important; }
+.sp12 { top: 40% !important; right: 11% !important; }
+.sp13 { top: 52% !important; right: 6% !important; }
+.sp14 { top: 64% !important; right: 13% !important; }
+.sp15 { top: 76% !important; right: 5% !important; }
+.sp16 { top: 88% !important; right: 11% !important; transform: translateY(-100%) !important; }
+
+/* Add clean breathing space before Beyond section */
+#beyond {
+  margin-top: 24px !important;
+  clear: both !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+@media (max-width:1100px) {
+  .skill-pill {
+    font-size: 18px !important;
+    padding: 10px 18px !important;
+  }
+}
+
+@media (max-width:900px) {
+  #skill {
+    padding-bottom: 64px !important;
+  }
+  .skills-wrap {
+    height: auto !important;
+    max-height: none !important;
+    min-height: auto !important;
+    overflow: visible !important;
+  }
+  .skills-video-bg {
+    height: 360px !important;
+  }
+  .skill-orbs {
+    position: relative !important;
+    height: auto !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  .skill-pill {
+    transform: none !important;
+  }
+}
+
+
+/* Symmetric skill box spacing refinement */
+.skills-wrap {
+  min-height: 82vh !important;
+  height: 82vh !important;
+  max-height: 82vh !important;
+  overflow: visible !important;
+}
+
+.skill-orbs {
+  position: absolute !important;
+  inset: 0 !important;
+  height: 100% !important;
+}
+
+/* Equal vertical rhythm across both columns — reduced gap, not cramped */
+.sp1  { top: 6% !important;  left: 6% !important;  transform: none !important; }
+.sp2  { top: 18% !important; left: 10% !important; transform: none !important; }
+.sp3  { top: 30% !important; left: 6% !important;  transform: none !important; }
+.sp4  { top: 42% !important; left: 10% !important; transform: none !important; }
+.sp5  { top: 54% !important; left: 6% !important;  transform: none !important; }
+.sp6  { top: 66% !important; left: 10% !important; transform: none !important; }
+.sp7  { top: 78% !important; left: 6% !important;  transform: none !important; }
+.sp8  { top: 90% !important; left: 10% !important; transform: translateY(-100%) !important; }
+
+.sp9  { top: 6% !important;  right: 6% !important;  transform: none !important; }
+.sp10 { top: 18% !important; right: 10% !important; transform: none !important; }
+.sp11 { top: 30% !important; right: 6% !important;  transform: none !important; }
+.sp12 { top: 42% !important; right: 10% !important; transform: none !important; }
+.sp13 { top: 54% !important; right: 6% !important;  transform: none !important; }
+.sp14 { top: 66% !important; right: 10% !important; transform: none !important; }
+.sp15 { top: 78% !important; right: 6% !important;  transform: none !important; }
+.sp16 { top: 90% !important; right: 10% !important; transform: translateY(-100%) !important; }
+
+/* Keep a safe gap after the skill fold */
+#skill {
+  padding-bottom: 110px !important;
+}
+#beyond {
+  margin-top: 28px !important;
+}
+
+@media (max-width:1100px) {
+  .skill-pill {
+    font-size: 17px !important;
+    padding: 9px 16px !important;
+  }
+  .sp1, .sp3, .sp5, .sp7 { left: 3% !important; }
+  .sp2, .sp4, .sp6, .sp8 { left: 7% !important; }
+  .sp9, .sp11, .sp13, .sp15 { right: 3% !important; }
+  .sp10, .sp12, .sp14, .sp16 { right: 7% !important; }
+}
+
+
+/* Final overlap fix for specific skill pills */
+.sp8 {
+  top: 86% !important;
+  left: 12% !important;
+  transform: translateY(-100%) !important;
+}
+
+.sp16 {
+  top: 86% !important;
+  right: 12% !important;
+  transform: translateY(-100%) !important;
+}
+
+
+/* Final uniform skill spacing refinement */
+
+/* Reduce gap between Skills heading and skill layout */
+#skill .s-head {
+  margin-bottom: 22px !important;
+}
+
+.skills-wrap {
+  min-height: 80vh !important;
+  height: 80vh !important;
+}
+
+/* Uniform equal spacing across all skill pills */
+.sp1  { top: 5% !important;  left: 6% !important; }
+.sp2  { top: 16% !important; left: 10% !important; }
+.sp3  { top: 27% !important; left: 6% !important; }
+.sp4  { top: 38% !important; left: 10% !important; }
+.sp5  { top: 49% !important; left: 6% !important; }
+.sp6  { top: 60% !important; left: 10% !important; }
+.sp7  { top: 71% !important; left: 6% !important; }
+.sp8  { top: 82% !important; left: 10% !important; transform: none !important; }
+
+.sp9  { top: 5% !important;  right: 6% !important; }
+.sp10 { top: 16% !important; right: 10% !important; }
+.sp11 { top: 27% !important; right: 6% !important; }
+.sp12 { top: 38% !important; right: 10% !important; }
+.sp13 { top: 49% !important; right: 6% !important; }
+.sp14 { top: 60% !important; right: 10% !important; }
+.sp15 { top: 71% !important; right: 6% !important; }
+.sp16 { top: 82% !important; right: 10% !important; transform: none !important; }
+
+@media (max-width:1100px) {
+  .skill-pill {
+    font-size: 17px !important;
+    padding: 9px 16px !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1321,7 +1514,6 @@ All layout, spacing, sections, and styling have been retained.
                preload="auto"
                disablepictureinpicture>
           <source src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Flow_202605051947.mp4" type="video/mp4">
-          
         </video>
       </div>
 
@@ -1482,7 +1674,7 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
       <div class="skills-video-bg" data-media-slot="skills-loop-video">
         <video autoplay muted loop playsinline preload="metadata">
           <source src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/sill%20section%20video.mp4" type="video/mp4">
-          
+          <source src="./assets/skills-loop.mp4" type="video/mp4">
         </video>
       </div>
       <div class="skill-orbs">
