@@ -1,0 +1,2252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vijay Anandasamy – Experiencepreneur</title>
+<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/mobile%20favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,600;1,700&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════════
+   RESET & BASE
+══════════════════════════════════════ */
+:root {
+  --orange: #F26522;
+  --black:  #0d0d0d;
+  --gray:   #5a5a5a;
+  --border: #e0e0e0;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:#fff; font-family:'Poppins',sans-serif; color:var(--black); overflow-x:hidden; }
+.page { display:none; }
+.page.active { display:block; }
+
+/* ══════════════════════════════════════
+   NAV
+══════════════════════════════════════ */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:1000;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:22px 60px;
+  background:transparent;
+  border:none; box-shadow:none;
+  min-height:88px;
+  pointer-events:none;
+}
+nav > * { pointer-events:auto; }
+
+/* Logo wrapper — transparent, no bg rectangle */
+.nav-logo-box {
+  width:60px; height:60px;
+  border-radius:14px;
+  background:transparent;
+  cursor:pointer;
+  flex-shrink:0;
+  overflow:hidden;
+}
+
+.nav-pills {
+  display:flex; align-items:center;
+  border:2px solid rgba(13,13,13,0.88);
+  border-radius:100px; padding:6px 8px; gap:3px;
+  background:rgba(255,255,255,0.82);
+  backdrop-filter:blur(24px) saturate(200%);
+  -webkit-backdrop-filter:blur(24px) saturate(200%);
+  box-shadow:0 4px 24px rgba(0,0,0,0.13);
+}
+.nav-pills a {
+  text-decoration:none; color:var(--black);
+  font-family:'Poppins',sans-serif; font-size:17px; font-weight:600;
+  padding:11px 28px; border-radius:100px;
+  transition:all 0.22s; white-space:nowrap;
+}
+/* Active/hover: ORANGE background, white text */
+.nav-pills a.active, .nav-pills a:hover {
+  background:var(--orange); color:#fff;
+}
+
+/* Social icons — no bg rectangle, just icons */
+.nav-social { display:flex; gap:10px; align-items:center; transition:opacity 0.4s ease; }
+.nav-social a {
+  display:flex; align-items:center; justify-content:center;
+  width:56px; height:56px; border-radius:14px;
+  background:transparent;
+  overflow:hidden; padding:4px;
+  transition:transform 0.2s, opacity 0.2s;
+}
+.nav-social a:hover { transform:scale(1.1); opacity:0.85; }
+.nav-social a img { width:56px; height:56px; object-fit:contain; display:block; }
+.social-placeholder {
+  width:36px; height:36px; border-radius:8px;
+  background:#f0f0f0; border:1.5px dashed #ccc;
+}
+
+/* ══════════════════════════════════════
+   HERO WRAPPER — Scroll-pinned sections
+══════════════════════════════════════ */
+/*
+  Strategy:
+  - #hero-wrapper is position:sticky-scrollable via JS
+  - It has a fixed height on viewport, content panel scrolls through 4 "slides"
+  - The right video panel stays absolutely fixed within the wrapper
+  - Text slides fade in/out as user scrolls through the wrapper height
+*/
+
+#hero-outer {
+  /* tall enough to scroll through 4 panels — 4 × 100vh */
+  height: 400vh;
+  position: relative;
+}
+
+#hero-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Right side: video placeholder — absolutely positioned, covers right 48% */
+.hero-right {
+  position: absolute;
+  top: 0; right: 0;
+  /* Right 55% of viewport — wide enough character doesn't feel cramped */
+  width: 55%; height: 100%;
+  background: transparent;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* The video fills full height, anchored to the right */
+.hero-char-video {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: auto;          /* keeps aspect ratio — no distortion */
+  min-width: 100%;      /* never leave a gap on narrow viewports */
+  object-fit: cover;
+  object-position: right center;
+}
+
+/* Left-edge gradient so video fades naturally into white page bg */
+.hero-right::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 220px;
+  background: linear-gradient(to right, #fff 0%, rgba(255,255,255,0) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Bottom fade — grounds the character */
+.hero-right::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 80px;
+  background: linear-gradient(to top, #fff 0%, rgba(255,255,255,0) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* hide old placeholders */
+.video-placeholder-label { display: none; }
+.hero-char { display: none; }
+
+/* Left side: slides container */
+.hero-left {
+  position: absolute;
+  top: 0; left: 0;
+  width: 52%; height: 100%;
+  z-index: 1;
+  display: flex; align-items: center;
+  padding: 0 8%;
+}
+
+/* Each slide */
+.hero-slide {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex; align-items: center;
+  padding: 0 8%;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+  pointer-events: none;
+}
+.hero-slide.slide-active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.hero-slide.slide-exit {
+  opacity: 0;
+  transform: translateY(-24px);
+}
+
+/* Scroll progress dots — removed */
+
+/* ══ SLIDE 1: QUOTE ══ */
+.quote-block {
+  text-align: left;
+  max-width: 100%;
+  margin-left: -18px; /* 9px more to the left */
+  padding-left: 0;
+}
+.quote-main {
+  font-family:'Anton',sans-serif;
+  font-size: clamp(38px, 4.7vw, 64px); /* -2px per request */
+  color: var(--orange);
+  line-height: 1.25;
+  letter-spacing: 0.5px;
+  font-style: normal;
+  margin-bottom: 0;
+  text-align: left;
+  white-space: pre-line;
+}
+/* Author name inline after last word — not on new line */
+.quote-attr {
+  display:inline; /* flows inline after quote text */
+  font-family:'Poppins',sans-serif;
+  font-size: 21px; font-weight:500;
+  color: var(--black);
+  margin-left: 10px;
+  font-style: normal;
+}
+
+/* ══ SLIDE 2: HI ══ */
+.hi-big {
+  font-family:'Anton',sans-serif;
+  font-size: clamp(80px, 11vw, 140px);
+  color: var(--orange); line-height:1; letter-spacing:2px;
+}
+.name-line {
+  font-family:'Anton',sans-serif;
+  font-size: clamp(38px, 4.7vw, 64px); /* same as quote */
+  color: var(--black); line-height:1.1; margin-top:12px; letter-spacing:0.5px;
+}
+.role-line {
+  font-family:'Poppins',sans-serif;
+  font-size: clamp(26px, 2.2vw, 32px); font-weight:500;
+  color: var(--black); margin-top:18px;
+}
+.role-hl {
+  background:rgba(242,101,34,0.18); font-weight:700;
+  border-radius:4px; padding:2px 10px;
+  color:var(--black);
+}
+
+/* ══ SLIDE 3: ABOUT ══ */
+.s-head {
+  font-family:'Anton',sans-serif;
+  font-size: clamp(34px, 4.5vw, 58px);
+  color: var(--orange); letter-spacing:1px; margin-bottom:28px;
+}
+.about-card {
+  border:1.5px solid #d5d5d5; border-radius:16px;
+  padding:40px 48px;
+  font-size:22px; line-height:1.85;
+  width:calc(68% - 6px); max-width:calc(68% - 6px); background:#fff;
+}
+.about-card p { margin-bottom:14px; }
+.about-card strong { font-weight:700; }
+.where-lbl { color:var(--orange); font-weight:700; margin-bottom:10px; }
+.about-list { padding-left:20px; list-style:disc; }
+.about-list li { margin-bottom:6px; }
+
+/* ══ SLIDE 4: IMPACT ══ */
+.impact-grid { display:grid; gap:26px; max-width:440px; margin-top:3px; }
+.impact-stat .num {
+  font-family:'Anton',sans-serif;
+  font-size: clamp(44px, 6vw, 72px);
+  color: var(--black); line-height:1; letter-spacing:1px;
+}
+.impact-stat .lbl {
+  font-size:21px; font-weight:600; color:var(--orange); margin-top:3px;
+}
+
+/* ══════════════════════════════════════
+   SELECTED WORK
+══════════════════════════════════════ */
+#work { padding:80px 8% 40px; }
+.work-head {
+  font-family:'Anton',sans-serif;
+  font-size: clamp(34px, 4.5vw, 58px);
+  color:var(--orange); letter-spacing:1px; margin-bottom:52px;
+}
+.work-item {
+  display:grid; grid-template-columns:48% 52%;
+  cursor:pointer; margin-bottom:6px;
+  transition:transform 0.25s ease, box-shadow 0.25s ease;
+  overflow:hidden;
+  border-radius:6px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.07);
+  isolation:isolate;
+  align-items:stretch; /* force equal height cols */
+  border:1px solid var(--border);
+}
+.work-item:hover {
+  transform:translateY(-4px);
+  box-shadow:0 10px 36px rgba(0,0,0,0.14), 0 0 0 1px rgba(242,101,34,0.25);
+  border-color:rgba(242,101,34,0.25);
+  z-index:2; position:relative;
+}
+/* Image col — same height as text col */
+.work-img-col {
+  overflow:hidden; background:#111;
+  min-height:0; /* flex takes over */
+}
+.work-img-col img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.4s; min-height:380px; }
+.work-item:hover .work-img-col img { transform:scale(1.04); }
+.work-text-col {
+  padding:52px 56px;
+  display:flex; flex-direction:column; justify-content:center;
+  background:#fff;
+}
+.work-meta {
+  font-size:19px; font-weight:600; color:var(--gray);
+  margin-bottom:12px; display:flex; align-items:center; gap:6px;
+}
+.dot { color:var(--orange); }
+.work-title {
+  font-family:'Anton',sans-serif;
+  font-size: clamp(26px, 3.2vw, 46px);
+  color:var(--black); letter-spacing:0.5px; line-height:1.05; margin-bottom:14px;
+}
+.work-desc { font-size:22px; line-height:1.8; color:var(--gray); margin-bottom:18px; max-width:400px; }
+.work-bullets {
+  font-size:21px; line-height:1.85; padding-left:18px;
+  list-style:disc; color:var(--black); margin-bottom:22px;
+}
+.work-bullets li { margin-bottom:8px; }
+.work-bullets strong { font-weight:700; }
+.tags { display:flex; gap:8px; flex-wrap:wrap; }
+.tag {
+  border:1.5px solid var(--orange); color:var(--orange);
+  font-size:19px; font-weight:600; padding:6px 16px; border-radius:100px;
+  transition:all 0.2s;
+}
+.work-item:hover .tag { background:var(--orange); color:#fff; }
+
+/* ══════════════════════════════════════
+   SKILLS
+══════════════════════════════════════ */
+#skill { padding:88px 8% 120px; }
+.skills-wrap {
+  position:relative;
+  min-height:980px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  border-radius:16px;
+}
+/* Skills center image — removed */
+.skills-center-img { display:none; }
+.skills-center-img img { width:100%; display:block; }
+
+/* Full-section skill video provision — place your loop file in the source below. */
+.skills-video-bg {
+  position:absolute;
+  inset:0;
+  transform:none;
+  width:100%;
+  min-width:0;
+  max-width:none;
+  height:100%;
+  z-index:0;
+  overflow:hidden;
+  border-radius:16px;
+  background:#fff;
+  display:block;
+  pointer-events:none;
+}
+.skills-video-bg video { width:100%; height:100%; object-fit:cover; display:block; }
+.skills-video-bg video:not([src]),
+.skills-video-bg video[src=""] { display:none; }
+.skills-video-bg::after { content:none; }
+
+.skill-orbs {
+  position:absolute;
+  inset:0;
+  z-index:2;
+}
+.skill-pill {
+  position:absolute;
+  border:2px solid var(--black);
+  border-radius:100px;
+  padding:12px 24px;
+  font-family:'Poppins',sans-serif;
+  font-size:20px;
+  font-weight:600;
+  background:#fff;
+  white-space:nowrap;
+  cursor:pointer;
+  transition:background 0.28s ease, color 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, transform 0.28s ease;
+  z-index:3;
+  animation:skillFloat 3.2s ease-in-out infinite alternate;
+}
+@keyframes skillFloat {
+  0%   { margin-left:-2px; }
+  100% { margin-left:2px; }
+}
+.skill-pill:nth-child(even) { animation-duration:3.8s; animation-delay:-0.8s; }
+.skill-pill:nth-child(3n) { animation-duration:4.4s; animation-delay:-1.4s; }
+.skill-pill:hover {
+  background:var(--orange);
+  color:#fff;
+  border-color:var(--orange);
+  transform:scale(1.06) translateY(-2px);
+  box-shadow:0 6px 24px rgba(242,101,34,0.25);
+}
+/* Tooltip popup */
+.skill-tip {
+  display:none;
+  position:absolute;
+  left:calc(100% + 14px);
+  top:50%;
+  transform:translateY(-50%);
+  background:#fff;
+  border:1px solid rgba(242,101,34,0.3);
+  border-radius:12px;
+  padding:12px 16px;
+  font-family:'Poppins',sans-serif;
+  font-size:12px;
+  font-weight:300;
+  color:#6a6a6a;
+  line-height:1.6;
+  width:320px;
+  white-space:normal;
+  box-shadow:0 3px 14px rgba(0,0,0,0.08);
+  z-index:10;
+  max-height:120px;
+  overflow-y:auto;
+  pointer-events:none;
+  text-align:center;
+}
+.skill-pill:hover .skill-tip { display:block; }
+
+/* Two-column skill formation inspired by the reference: staggered left/right rows,
+   with a wide clear centre zone and generous spacing between each skill box. */
+.sp1 { top:  36px; left:  4%; }
+.sp2 { top: 144px; left: 11%; }
+.sp3 { top: 252px; left:  6%; }
+.sp4 { top: 360px; left: 13%; }
+.sp5 { top: 468px; left:  5%; }
+.sp6 { top: 576px; left: 12%; }
+.sp7 { top: 684px; left:  7%; }
+.sp8 { top: 792px; left: 14%; }
+
+.sp9  { top:  36px; right:  6%; }
+.sp10 { top: 144px; right: 13%; }
+.sp11 { top: 252px; right:  5%; }
+.sp12 { top: 360px; right: 12%; }
+.sp13 { top: 468px; right:  7%; }
+.sp14 { top: 576px; right: 14%; }
+.sp15 { top: 684px; right:  6%; }
+.sp16 { top: 792px; right: 11%; }
+
+.sp9 .skill-tip,.sp10 .skill-tip,.sp11 .skill-tip,.sp12 .skill-tip,.sp13 .skill-tip,.sp14 .skill-tip,.sp15 .skill-tip,.sp16 .skill-tip {
+  left:auto;
+  right:calc(100% + 14px);
+}
+
+@media (max-width:1100px) {
+  .skills-wrap { min-height:980px; }
+  .skills-video-bg { inset:0; width:100%; min-width:0; height:100%; }
+  .skill-pill { font-size:18px; padding:11px 20px; }
+  .sp1,.sp3,.sp5,.sp7 { left:1%; }
+  .sp2,.sp4,.sp6,.sp8 { left:6%; }
+  .sp9,.sp11,.sp13,.sp15 { right:1%; }
+  .sp10,.sp12,.sp14,.sp16 { right:6%; }
+}
+
+@media (max-width:900px) {
+  .skills-wrap { min-height:auto; display:block; padding:20px 0; }
+  .skills-video-bg {
+    position:relative;
+    top:auto; left:auto;
+    transform:none;
+    width:100%; min-width:0; max-width:none;
+    height:360px;
+    margin:20px 0 28px;
+  }
+  .skill-orbs { position:relative; display:grid; grid-template-columns:1fr; gap:12px; }
+  .skill-pill {
+    position:relative !important;
+    top:auto !important; left:auto !important; right:auto !important;
+    width:max-content;
+    max-width:100%;
+  }
+  .skill-tip { display:none !important; }
+}
+
+/* ══════════════════════════════════════
+   BEYOND THE PORTFOLIO
+══════════════════════════════════════ */
+#beyond { padding:88px 8%; margin-bottom:80px; }
+.beyond-head {
+  font-family:'Anton',sans-serif;
+  font-size: clamp(28px, 4vw, 54px);
+  color:var(--black); letter-spacing:1px; margin-bottom:44px;
+}
+.beyond-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start; }
+.beyond-photo {
+  width:100%;
+  aspect-ratio: 669 / 646; /* Reference image frame proportion from Beyond the portfolio section */
+  overflow:hidden;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:#f7f7f7;
+}
+.beyond-photo img {
+  width:100%;
+  height:100%;
+  border-radius:8px;
+  max-height:none;
+  object-fit:cover;
+  object-position:center top;
+  display:block;
+}
+.bq-intro { font-size:20px; color:var(--gray); margin-top:16px; margin-bottom:6px; }
+.bq {
+  font-family:'Poppins',sans-serif; font-size:23px;
+  font-style:italic; font-weight:700; color:var(--orange);
+  line-height:1.45; margin-bottom:18px;
+}
+.b-bio { font-size:22px; line-height:1.85; }
+.b-row { padding:16px 0; border-bottom:1px solid var(--border); }
+.b-row:last-child { border-bottom:none; }
+.b-row .rl { font-size:20px; font-weight:700; margin-bottom:4px; }
+.b-row .rv { font-size:21px; line-height:1.65; }
+.ctags { display:flex; gap:7px; flex-wrap:wrap; margin-top:8px; }
+.ctag { border:1.5px solid var(--orange); border-radius:100px; padding:5px 14px; font-size:19px; font-weight:700; color:var(--orange); background:rgba(242,101,34,0.07); }
+
+/* ══════════════════════════════════════
+   FOOTER / CONTACT
+══════════════════════════════════════ */
+#contact, .contact-section { padding:120px 0 64px; text-align:center; overflow:hidden; }
+
+.footer-name {
+  font-family:'Anton',sans-serif;
+  color:transparent;
+  -webkit-text-stroke:2.5px var(--orange);
+  line-height:1; white-space:nowrap; letter-spacing:4px;
+  display:block; width:100%; margin-bottom:18px;
+}
+.ticker-wrap { overflow:hidden; margin-bottom:44px; }
+.ticker-inner {
+  display:inline-flex; white-space:nowrap;
+  animation:ticker 22s linear infinite;
+  font-family:'Poppins',sans-serif; font-size:22px; font-weight:600; color:var(--black);
+}
+@keyframes ticker { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+
+/* Contact rows */
+.contact-row {
+  display:flex; align-items:center; justify-content:center;
+  gap:10px; margin-bottom:12px;
+}
+/* Icon placeholder in contact rows */
+.icon-placeholder-sm {
+  width:22px; height:22px;
+  border-radius:4px; background:#f0f0f0;
+  border:1.5px dashed #ccc; flex-shrink:0;
+}
+.contact-row a, .contact-row span {
+  font-family:'Poppins',sans-serif; font-size:23px; font-weight:600; color:var(--black);
+}
+.contact-row a { text-decoration:underline; }
+
+/* Footer icon buttons */
+.footer-icons { display:flex; gap:16px; justify-content:center; margin-top:36px; align-items:center; }
+
+/* Placeholder circle for icon buttons */
+.fi-circle {
+  width: 60px; height: 60px; border-radius: 50%;
+  background: #f5f5f5;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+}
+.fi-circle:hover { transform: scale(1.1); box-shadow: 0 4px 16px rgba(242,101,34,0.2); }
+.fi-placeholder {
+  width:52px; height:52px; border-radius:50%;
+  background:#f0f0f0; border:1.5px dashed #ccc;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition:transform 0.2s;
+  text-decoration:none; font-size:10px; color:#aaa;
+  font-family:'Poppins',sans-serif; text-align:center; line-height:1.2;
+}
+.fi-placeholder:hover { transform:scale(1.1); }
+
+
+/* Scroll hint on standalone hero */
+.scroll-hint {
+  position:absolute; bottom:24px; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  color:rgba(255,255,255,0.7); font-family:'Poppins',sans-serif;
+  font-size:12px; font-weight:500; letter-spacing:1px; text-transform:uppercase;
+  animation:bounceDown 2s ease infinite;
+  z-index:5; pointer-events:none;
+}
+.scroll-hint svg { opacity:0.7; }
+@keyframes bounceDown {
+  0%,100% { transform:translateX(-50%) translateY(0); }
+  50%      { transform:translateX(-50%) translateY(8px); }
+}
+/* ══════════════════════════════════════
+   STANDALONE PAGES
+══════════════════════════════════════ */
+.back-btn {
+  position:fixed; top:82px; left:28px; z-index:900;
+  display:flex; align-items:center; gap:8px;
+  border:1.5px solid var(--black); border-radius:100px;
+  background:#fff; padding:10px 24px;
+  font-family:'Poppins',sans-serif; font-size:20px; font-weight:600;
+  cursor:pointer; text-decoration:none; color:var(--black); transition:all 0.2s;
+}
+.back-btn:hover { background:var(--black); color:#fff; }
+
+.sa-hero {
+  position:relative; overflow:hidden; width:100%;
+  height:100vh; /* full viewport */
+  min-height:500px;
+}
+.sa-hero img { width:100%; height:100%; object-fit:cover; display:block; position:absolute; top:0; left:0; }
+.sa-hero-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.1) 100%);
+  display:flex; flex-direction:column; justify-content:flex-end; padding:60px 5% 60px 48px;
+}
+.sa-tags { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
+.sa-tag {
+  background:rgba(242,101,34,0.9); color:#fff;
+  font-family:'Poppins',sans-serif; font-size:15px; font-weight:700;
+  padding:8px 20px; border-radius:100px;
+}
+.sa-title {
+  font-family:'Anton',sans-serif;
+  font-size: clamp(68px, 10vw, 120px); /* bigger, left */
+  color:#fff; line-height:1; letter-spacing:1px; margin-bottom:16px;
+}
+.sa-subtitle {
+  font-family:'Poppins',sans-serif; font-size:18px; font-weight:600;
+  color:rgba(255,255,255,0.85); display:flex; align-items:center; gap:8px;
+}
+
+.sa-body { padding:56px 4%; max-width:100%; margin:0 auto; }
+.sa-ol { font-family:'Poppins',sans-serif; font-size:23px; font-weight:700; color:var(--orange); margin-bottom:16px; }
+.sa-body p {
+  font-family:'Poppins',sans-serif; font-size:22px; line-height:1.9;
+  color:var(--black); margin-bottom:18px;
+}
+.sa-body p strong { font-weight:700; }
+.sa-metrics {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:24px; margin:56px 0;
+}
+.sa-metric {
+  text-align:center;
+  background:#fff;
+  border:1.5px solid var(--border);
+  border-radius:16px;
+  padding:36px 24px;
+  display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+}
+.sa-metric .mn {
+  font-family:'Anton',sans-serif;
+  font-size: clamp(28px, 4vw, 54px);
+  color:var(--orange); line-height:1; letter-spacing:1px;
+}
+.sa-metric .mt { font-size:21px; font-weight:700; color:var(--black); margin:10px 0 8px; }
+.sa-metric .md { font-size:20px; color:var(--gray); line-height:1.6; }
+.sa-lbl {
+  font-family:'Poppins',sans-serif; font-size:21px; font-weight:700;
+  color:var(--orange); margin-top:56px; margin-bottom:8px;
+  display:flex; align-items:center; gap:10px;
+}
+.sa-lbl::before {
+  content:''; display:block;
+  width:32px; height:3px;
+  background:var(--orange); border-radius:2px; flex-shrink:0;
+}
+.sa-sub2 { font-size:24px; font-weight:700; color:var(--black); margin-bottom:16px; }
+.sa-list {
+  padding-left:22px; list-style:disc;
+  font-family:'Poppins',sans-serif; font-size:22px; line-height:1.9;
+  color:var(--black); margin-bottom:16px;
+}
+.sa-list li { margin-bottom:10px; }
+.sa-list strong { font-weight:700; }
+.next-proj {
+  border-top:1px solid var(--border); margin-top:68px;
+  padding:56px 0 44px; text-align:center;
+}
+.next-lbl {
+  font-family:'Poppins',sans-serif; font-size:19px; font-weight:700;
+  color:var(--orange); letter-spacing:2px; margin-bottom:10px;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+}
+.next-name {
+  font-family:'Anton',sans-serif; font-size: clamp(22px,3.5vw,44px);
+  color:var(--black); letter-spacing:1px; margin-bottom:22px;
+}
+.view-btn {
+  border:1.5px solid var(--black); border-radius:100px; background:#fff;
+  padding:14px 40px; font-family:'Poppins',sans-serif;
+  font-size:21px; font-weight:700; cursor:pointer; color:var(--black); transition:all 0.2s;
+}
+.view-btn:hover { background:var(--orange); color:#fff; border-color:var(--orange); }
+.next-actions {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:16px;
+  flex-wrap:wrap;
+}
+.view-btn.secondary {
+  background:#fff;
+  color:var(--black);
+}
+.view-btn.secondary:hover {
+  background:var(--black);
+  color:#fff;
+  border-color:var(--black);
+}
+
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+@media (max-width:900px) {
+  nav { padding:14px 20px; min-height:72px; }
+  #hero-outer { height:auto; }
+  #hero-sticky { position:relative; height:auto; }
+  .hero-right { display:none; }
+  .hero-left { position:relative; width:100%; }
+  .hero-slide { position:relative; opacity:1 !important; transform:none !important; pointer-events:auto; padding:60px 6%; min-height:auto; }
+  .hero-slide.slide-exit { display:none; }
+  .hero-dots { display:none; }
+  .work-item { grid-template-columns:1fr; }
+  .work-img-col { min-height:240px; }
+  .beyond-grid { grid-template-columns:1fr; }
+  .sa-metrics { grid-template-columns:1fr; }
+  #work,#skill,#beyond,#contact,.contact-section { padding-left:6%; padding-right:6%; }
+}
+
+/* ══════════════════════════════════════
+   CUSTOM CURSOR
+══════════════════════════════════════ */
+*, *::before, *::after { cursor: none !important; }
+#custom-cursor {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1.5px solid rgba(242,101,34,0.7);
+  box-shadow:
+    0 0 0 2px rgba(242,101,34,0.18),
+    0 0 0 5px rgba(242,101,34,0.07);
+  position: fixed; z-index: 99999;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: width 0.13s ease, height 0.13s ease, box-shadow 0.13s ease;
+}
+#custom-cursor.cursor-hover {
+  width: 22px; height: 22px;
+  background: #fff;
+  border: 1.5px solid rgba(242,101,34,0.7);
+  box-shadow:
+    0 0 0 3px rgba(242,101,34,0.2),
+    0 0 0 7px rgba(242,101,34,0.08);
+}
+
+
+/* ── Page footer (all pages) ──────────────────────────── */
+.page-footer {
+  padding: 24px 5% 20px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  color: #888;
+  background: #fafafa;
+  margin-top: 48px;
+}
+.pf-name { font-weight: 700; color: #0d0d0d; letter-spacing: 1px; }
+.pf-sep  { margin: 0 8px; color: #ccc; }
+.pf-link { color: #F26522; text-decoration: none; }
+.pf-link:hover { text-decoration: underline; }
+.pf-copy { margin-top: 8px; font-size: 11px; color: #bbb; }
+
+/* Wiggle animation for Hi! and Experiencepreneur */
+@keyframes wiggle {
+  0%,100% { transform: rotate(0deg); }
+  20%      { transform: rotate(-3deg); }
+  40%      { transform: rotate(3deg); }
+  60%      { transform: rotate(-2deg); }
+  80%      { transform: rotate(2deg); }
+}
+.wiggle-hi { display:inline-block; animation: wiggle 2.8s ease-in-out infinite; transform-origin: center; }
+.wiggle-exp { display:inline-block; animation: wiggle 3.4s ease-in-out infinite 0.6s; transform-origin: center; }
+
+/* Beyond section border + shadow glow */
+#beyond {
+  border: 1.5px solid rgba(242,101,34,0.22);
+  border-radius: 18px;
+  box-shadow: 0 4px 32px rgba(242,101,34,0.08), 0 1px 8px rgba(0,0,0,0.07);
+  padding: 48px 5%;
+  margin: 0 3%;
+  background: #fff;
+}
+
+
+/* Blank media slots: embedded images/videos were removed to keep the HTML lightweight.
+   Add local paths back into src="" when ready. */
+img[data-media-slot] {
+  visibility: hidden !important;
+}
+video[data-media-slot] {
+  visibility: visible !important;
+}
+.hero-right,
+.work-img-col,
+.beyond-photo,
+.sa-hero,
+.skills-video-bg,
+.nav-social a,
+.footer-icons a {
+  background-color: #f7f7f7;
+}
+
+/* Beyond portfolio local image provision. Add the image path in the img src inside this frame. */
+.beyond-photo {
+  position: relative;
+}
+.beyond-photo:empty::after {
+  content: 'Add Beyond photo here';
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Poppins',sans-serif;
+  font-size:14px; font-weight:600;
+  color:#aaa;
+  border:1.5px dashed #ddd;
+  border-radius:8px;
+}
+
+
+/* Updated skill module: video fills the complete section, skills float above it. */
+.skills-video-bg { background:#fff !important; }
+
+/* Keep the contact section clean on all pages. */
+#contact,
+.contact-section,
+#contact .contact-row,
+.contact-section .contact-row {
+  background: #fff !important;
+}
+
+
+
+/* Final requested layout tuning */
+.hero-slide #impact {
+  transform: translateX(56px);
+}
+.about-card {
+  width: calc(58% - 6px) !important;
+  max-width: calc(58% - 6px) !important;
+}
+
+@media (max-width:900px) {
+  .hero-slide #impact { transform: none; }
+  .about-card { width: 100% !important; max-width: 100% !important; }
+}
+
+/* Beyond quote repositioned below colleague tags */
+.beyond-quote-block {
+  margin-top: 34px;
+  padding-top: 10px;
+}
+.beyond-quote-block .bq-intro {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+.beyond-quote-block .bq {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(34px, 3.8vw, 58px);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.8px;
+  line-height: 1.12;
+  margin-bottom: 22px;
+}
+
+
+/* Fine-tuning pass: slightly stronger text presence + balanced Beyond section */
+.work-desc { font-size:23px; }
+.work-bullets { font-size:22px; }
+.work-meta { font-size:20px; }
+.tag { font-size:20px; }
+.sa-body p { font-size:23px; }
+.sa-list { font-size:23px; }
+.sa-metric .mt { font-size:22px; }
+.sa-metric .md { font-size:21px; }
+.b-row .rl { font-size:21px; }
+.b-row .rv { font-size:22px; }
+.ctag { font-size:20px; }
+.contact-row a, .contact-row span { font-size:24px; }
+
+/* Keep Beyond right column visually aligned with the photo frame */
+.beyond-grid { align-items:stretch; }
+.beyond-grid > div { min-height:0; }
+.beyond-photo { height:100%; min-height:640px; aspect-ratio:auto; }
+.beyond-quote-block { margin-top:24px; padding-top:4px; }
+.beyond-quote-block .bq-intro { font-size:18px; margin-bottom:8px; }
+.beyond-quote-block .bq {
+  font-family:'Anton', sans-serif;
+  font-size:clamp(24px, 2.45vw, 36px);
+  font-style:normal;
+  font-weight:400;
+  line-height:1.14;
+  letter-spacing:0.4px;
+  margin-bottom:14px;
+  white-space:nowrap;
+}
+.beyond-quote-block .b-bio { font-size:20px; line-height:1.58; margin-bottom:0; }
+
+@media (max-width:900px) {
+  .beyond-photo { height:auto; min-height:0; aspect-ratio:669 / 646; }
+}
+
+/* Hero section text scale-up: fills first-fold whitespace without changing layout structure */
+.quote-main { font-size: clamp(44px, 5.45vw, 76px); line-height: 1.18; }
+.quote-attr { font-size: 24px; }
+.hi-big { font-size: clamp(96px, 12.5vw, 162px); }
+.name-line { font-size: clamp(46px, 5.45vw, 76px); line-height: 1.05; }
+.role-line { font-size: clamp(30px, 2.55vw, 38px); margin-top: 20px; }
+.s-head { font-size: clamp(42px, 5.2vw, 70px); margin-bottom: 30px; }
+.about-card { font-size: 24px; line-height: 1.78; padding: 42px 50px; width: calc(66% - 6px); max-width: calc(66% - 6px); }
+.about-list li { margin-bottom: 8px; }
+.impact-grid { gap: 30px; max-width: 500px; }
+.impact-stat .num { font-size: clamp(54px, 7vw, 86px); }
+.impact-stat .lbl { font-size: 24px; margin-top: 5px; }
+
+
+
+/* Final media-slot cleanup: no blank <img> placeholders in major image areas. */
+nav { top: 18px !important; }
+.back-btn { top: 112px !important; }
+
+.media-provision {
+  position: relative;
+  background: #f7f7f7;
+  overflow: hidden;
+}
+.media-provision::after {
+  content: attr(data-local-src);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border: 1.5px dashed #d8d8d8;
+  color: #aaa;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  pointer-events: none;
+}
+.work-img-col.media-provision { min-height: 380px; }
+.sa-hero.media-provision {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.sa-hero.media-provision::after,
+.work-img-col.media-provision::after,
+.beyond-photo.media-provision::after { z-index: 0; }
+.sa-hero-overlay,
+.scroll-hint { z-index: 2; }
+
+/* When you add an actual image later, either add it as background-image on the slot
+   or insert an <img> inside the slot and remove/override the ::after rule. */
+
+@media (max-width:900px) {
+  nav { top: 10px !important; }
+  .back-btn { top: 92px !important; }
+}
+
+
+
+/* Section design-art provisions — lightweight full-width slots for later Claude/local image placement.
+   Add your divider artwork later using CSS, for example:
+   .section-art-slot.hero-to-work { background-image:url('./assets/section-divider-01.png'); }
+   No image is embedded here, so the HTML stays light. */
+.section-art-slot {
+  width: 100vw;
+  height: clamp(110px, 13vw, 220px);
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  background: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% auto;
+  pointer-events: none;
+  overflow: hidden;
+}
+.section-art-slot.compact {
+  height: clamp(90px, 11vw, 180px);
+}
+
+
+
+/* Beyond portfolio final polish: taller image frame + controlled colleague tags */
+#beyond .beyond-grid {
+  align-items: stretch;
+  gap: 60px;
+}
+#beyond .beyond-grid > div:first-child {
+  display: flex;
+  flex-direction: column;
+}
+#beyond .beyond-grid > div:last-child {
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+#beyond .beyond-photo {
+  width: 100%;
+  height: 100%;
+  min-height: 760px;
+  aspect-ratio: auto;
+}
+#beyond .beyond-photo.media-provision {
+  min-height: 760px;
+}
+#beyond .ctags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 9px;
+  align-items: center;
+  max-width: 100%;
+  overflow: visible;
+}
+#beyond .ctag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  white-space: nowrap;
+  transition: transform 0.22s ease, background-color 0.22s ease, color 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+#beyond .ctag:hover {
+  transform: translateY(-2px) scale(1.04);
+  background: var(--orange);
+  color: #fff;
+  border-color: var(--orange);
+  box-shadow: 0 8px 20px rgba(242,101,34,0.18);
+}
+#beyond .ctag-row-break {
+  flex-basis: 100%;
+  height: 0;
+  padding: 0;
+  margin: 0;
+}
+#beyond .b-row,
+#beyond .beyond-quote-block {
+  max-width: 100%;
+}
+
+@media (max-width: 900px) {
+  #beyond .beyond-photo,
+  #beyond .beyond-photo.media-provision {
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 669 / 646;
+  }
+  #beyond .ctag-row-break { display: none; }
+  #beyond .ctag { white-space: normal; }
+}
+
+
+
+/* Final refinement: About card scale + Beyond quote spacing */
+.about-card {
+  font-size: 26px !important;
+  line-height: 1.82 !important;
+  padding: 52px 56px !important;
+  min-height: 540px !important;
+}
+.about-card p { margin-bottom: 20px !important; }
+.about-list li { margin-bottom: 12px !important; }
+
+.beyond-quote-block {
+  margin-top: 42px !important;
+  padding-top: 16px !important;
+}
+.beyond-quote-block .bq-intro {
+  margin-bottom: 18px !important;
+}
+.beyond-quote-block .bq {
+  margin-bottom: 34px !important;
+}
+.beyond-quote-block .b-bio {
+  margin-top: 0 !important;
+  line-height: 1.72 !important;
+}
+
+@media (max-width:900px) {
+  .about-card { min-height: auto !important; padding: 36px 28px !important; font-size: 22px !important; }
+}
+
+
+/* Final layout adjustments requested */
+.section-art-slot {
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Reduce first hero quote so it stays within the left half */
+.quote-block {
+  max-width: 50vw !important;
+}
+.quote-main {
+  font-size: clamp(34px, 4vw, 56px) !important;
+  line-height: 1.2 !important;
+  max-width: 50vw !important;
+}
+.quote-attr {
+  font-size: 20px !important;
+}
+
+/* Reduce vertical gaps between major sections */
+#work {
+  padding-top: 44px !important;
+  padding-bottom: 24px !important;
+}
+#skill {
+  padding-top: 48px !important;
+  padding-bottom: 64px !important;
+}
+#beyond {
+  padding-top: 38px !important;
+  padding-bottom: 38px !important;
+  margin-top: 0 !important;
+  margin-bottom: 36px !important;
+}
+#contact,
+.contact-section {
+  padding-top: 64px !important;
+}
+
+/* Reduce Beyond portfolio photo vertical length */
+#beyond .beyond-photo,
+#beyond .beyond-photo.media-provision {
+  min-height: 560px !important;
+  height: 560px !important;
+  aspect-ratio: auto !important;
+}
+
+@media (max-width:900px) {
+  .quote-block,
+  .quote-main {
+    max-width: 100% !important;
+  }
+  .quote-main {
+    font-size: clamp(32px, 8vw, 44px) !important;
+  }
+  #beyond .beyond-photo,
+  #beyond .beyond-photo.media-provision {
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: 669 / 646 !important;
+  }
+}
+
+
+/* Final video + Beyond image provision adjustments */
+
+/* Beyond portfolio headshot: keep vertical height controlled, but restore horizontal presence */
+#beyond .beyond-grid {
+  grid-template-columns: 45% 55% !important;
+  gap: 52px !important;
+}
+#beyond .beyond-grid > div:first-child {
+  align-items: center !important;
+}
+#beyond .beyond-photo,
+#beyond .beyond-photo.media-provision {
+  width: 75% !important;
+  max-width: 75% !important;
+  min-height: 560px !important;
+  height: 560px !important;
+  aspect-ratio: auto !important;
+}
+
+/* First fold 3D video provision: right half, 80vh space, loop-ready */
+.hero-right {
+  display: block !important;
+  position: absolute !important;
+  top: 10vh !important;
+  right: 0 !important;
+  width: 50vw !important;
+  height: 80vh !important;
+  background: transparent !important;
+  z-index: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+}
+.hero-char-video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+}
+
+/* Keep quote visually aligned with the 3D model eye-level area */
+#slide-0 {
+  align-items: center !important;
+}
+.quote-block {
+  max-width: 48vw !important;
+}
+
+/* Skill section 3D background video provision: full-width back layer around 80vh */
+.skills-wrap {
+  min-height: 80vh !important;
+  height: 80vh !important;
+  position: relative !important;
+}
+.skills-video-bg {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 80vh !important;
+  z-index: 0 !important;
+  background: #fff !important;
+  overflow: hidden !important;
+  border-radius: 16px !important;
+}
+.skills-video-bg video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+}
+.skill-orbs {
+  z-index: 2 !important;
+}
+
+@media (max-width:900px) {
+  #beyond .beyond-grid {
+    grid-template-columns: 1fr !important;
+  }
+  #beyond .beyond-photo,
+  #beyond .beyond-photo.media-provision {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: 669 / 646 !important;
+  }
+  .hero-right {
+    display: none !important;
+  }
+  .skills-wrap {
+    height: auto !important;
+    min-height: auto !important;
+  }
+  .skills-video-bg {
+    position: relative !important;
+    height: 360px !important;
+  }
+}
+
+</style>
+</head>
+<body>
+<!--
+IMAGE/VIDEO SLOTS CLEANED
+Embedded base64 media has been removed. To map local assets, add paths back like:
+  <img src="./assets/your-image.png" ...>
+  <source src="./assets/your-video.webm" type="video/webm">
+All layout, spacing, sections, and styling have been retained.
+-->
+
+
+<!-- ═══════════════════════════════════════════
+     MAIN PAGE
+═══════════════════════════════════════════ -->
+<div class="page active" id="page-main">
+
+  <nav id="main-nav">
+    <!-- VA Logo — placeholder box, replace with <img> when ready -->
+    <img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Website%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Website%20logo.png" data-media-slot="logo" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="VA" onclick="window.location.reload()" style="height:48px;width:48px;object-fit:contain;display:block;cursor:pointer;border-radius:10px;" title="Vijay Anandasamy">
+
+    <div class="nav-pills">
+      <a href="#about" class="active" onclick="navToSection('about');setActive(this);return false;">About</a>
+      <a href="#work"  onclick="navToSection('work');setActive(this);return false;">Work</a>
+      <a href="#skill" onclick="navToSection('skill');setActive(this);return false;">Skill</a>
+      <a href="#contact" onclick="navToSection('contact');setActive(this);return false;">Contact</a>
+    </div>
+
+    <div class="nav-social nav-fade-group">
+      <!-- LinkedIn placeholder -->
+      <a href="https://www.linkedin.com/in/vijay-anandasamy" target="_blank" rel="noopener" title="LinkedIn"><img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/link%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/link%20logo.png" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
+      <!-- Instagram placeholder -->
+      <a href="https://www.instagram.com/vijayanandasamy8/?hl=en" target="_blank" rel="noopener" title="Instagram"><img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Instagram%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Instagram%20logo.png" data-media-slot="instagram-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Instagram" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════
+       HERO — Scroll-driven 4-panel
+  ═══════════════════════════════════ -->
+  <div id="hero-outer">
+    <div id="hero-sticky">
+
+      <!-- Right: animated character video — fixed across all 4 hero slides -->
+      <div class="hero-right">
+        <video class="hero-char-video"
+               autoplay muted loop playsinline
+               preload="auto"
+               disablepictureinpicture>
+          <source src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Flow_202605051947.mp4" type="video/mp4">
+          
+        </video>
+      </div>
+
+      <!-- Progress dots removed -->
+
+      <!-- SLIDE 1: QUOTE -->
+      <div class="hero-slide slide-active" id="slide-0">
+        <div class="quote-block">
+          <div class="quote-main">"Experience without theory is blind,
+but theory without experience is mere
+intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
+        </div>
+      </div>
+
+      <!-- SLIDE 2: HI -->
+      <div class="hero-slide" id="slide-1">
+        <div>
+          <div class="hi-big"><span class="wiggle-hi">Hi!</span></div>
+          <div class="name-line">I am Vijay Anandasamy</div>
+          <div class="role-line">I am an <span class="role-hl wiggle-exp">Experiencepreneur</span></div>
+        </div>
+      </div>
+
+      <!-- SLIDE 3: ABOUT -->
+      <div class="hero-slide" id="slide-2">
+        <div>
+          <div class="s-head">About</div>
+          <div class="about-card">
+            <p>I started early — not by following a fixed path, but by stepping into real environments where learning came from doing.</p>
+            <p>From teaching classmates in school to <strong>working across consulting, implementation, partnerships, and systems</strong> at Zoho, every stage added a layer to how I think and operate.</p>
+            <p class="where-lbl">Where I operate</p>
+            <ul class="about-list">
+              <li>At the intersection of ideas and execution.</li>
+              <li>Between systems and people.</li>
+              <li>Across business, technology, and communication.</li>
+              <li>In environments that demand clarity, speed, and ownership.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 4: OPERATIONAL IMPACT -->
+      <div class="hero-slide" id="slide-3">
+        <div id="impact">
+          <div class="s-head">Operational Impact</div>
+          <div class="impact-grid">
+            <div class="impact-stat">
+              <div class="num" data-target="100" data-suffix="+"><span class="cn">0</span>+</div>
+              <div class="lbl">App Partnerships</div>
+            </div>
+            <div class="impact-stat">
+              <div class="num" data-target="25000" data-suffix="+"><span class="cn">0</span>+</div>
+              <div class="lbl">Automated templates</div>
+            </div>
+            <div class="impact-stat">
+              <div class="num" data-target="23000" data-prefix="$" data-suffix="+">$<span class="cn">0</span>+</div>
+              <div class="lbl">Initial Deals Handled</div>
+            </div>
+            <div class="impact-stat">
+              <div class="num" data-target="6000" data-suffix="+"><span class="cn">0</span>+</div>
+              <div class="lbl">Followers Achieved</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end #hero-sticky -->
+  </div><!-- end #hero-outer -->
+  <!-- ═══════════════════════════════════
+       SELECTED WORK
+  ═══════════════════════════════════ -->
+  <section id="work">
+    <div class="work-head">Selected Work</div>
+
+    <div class="work-item" onclick="goTo('page-flow')">
+      <div class="work-img-col media-provision" data-media-slot="zoho-flow-image" data-local-src="./assets/zoho-flow.jpg" aria-label="Zoho Flow image slot"><img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/specified%20work%201.png" alt="Zoho Flow" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+      <div class="work-text-col">
+        <div class="work-meta">India <span class="dot">◆</span> Global <span class="dot">◆</span> Nov 2023 to May 2026</div>
+        <div class="work-title">Zoho Flow</div>
+        <p class="work-desc">Scaling integrations through structured execution, ecosystem thinking, and internal system design.</p>
+        <ul class="work-bullets">
+          <li>Built and <strong>managed partnerships</strong> by aligning product, market, and customer needs</li>
+          <li>Designed internal team workflows to reduce friction across teams and processes</li>
+          <li>Drove integrations from build to adoption by coordinating between development and marketing.</li>
+        </ul>
+        <div class="tags">
+          <span class="tag">#AI-Powered Automation</span>
+          <span class="tag">#Go-To-Market</span>
+          <span class="tag">#API &amp; Integration Thinking</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="work-item" onclick="goTo('page-jumpstart')">
+      <div class="work-img-col media-provision" data-media-slot="zoho-jumpstart-image" data-local-src="./assets/zoho-jumpstart.jpg" aria-label="Zoho Jumpstart image slot"><img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Specified%20work%202.png" alt="Zoho Jumpstart" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+      <div class="work-text-col">
+        <div class="work-meta">India <span class="dot">◆</span> Global <span class="dot">◆</span> Jun 2023 to Nov 2023</div>
+        <div class="work-title">Zoho Jumpstart</div>
+        <p class="work-desc">Executing real-world business solutions through consulting, deal ownership, and end-to-end implementation.</p>
+        <ul class="work-bullets">
+          <li>Worked on live deals by mapping business requirements to Zoho and third-party applications.</li>
+          <li>Handled both <strong>consulting and implementation</strong> across customer engagements.</li>
+          <li>Supported <strong>multi-region deals</strong> across Indian, ANZ, Middle east and US.</li>
+        </ul>
+        <div class="tags">
+          <span class="tag">#Solution Consulting</span>
+          <span class="tag">#Cross-Platform System Design</span>
+          <span class="tag">#Implementation</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="work-item" onclick="goTo('page-concierge')">
+      <div class="work-img-col media-provision" data-media-slot="zoho-concierge-image" data-local-src="./assets/zoho-concierge.jpg" aria-label="Zoho Concierge image slot"><img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Specified%20work%203.png" alt="Zoho Concierge" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+      <div class="work-text-col">
+        <div class="work-meta">India <span class="dot">◆</span> Global <span class="dot">◆</span> Apr 2023 to Nov 2023</div>
+        <div class="work-title">Zoho Concierge</div>
+        <p class="work-desc">Built strong consulting fundamentals by understanding business processes, and designing workflows.</p>
+        <ul class="work-bullets">
+          <li>Worked on consulting, pitching, and customer communication across live business scenarios.</li>
+          <li>Designed workflows by understanding customer journeys and business operations.</li>
+          <li>Developed strong foundations in <strong>sales, support, and cross-product problem solving.</strong></li>
+        </ul>
+        <div class="tags">
+          <span class="tag">#Product Ecosystem Mastery</span>
+          <span class="tag">#System Thinking</span>
+          <span class="tag">#Solution Discovery</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="work-item" onclick="goTo('page-dharma')">
+      <div class="work-img-col media-provision" data-media-slot="dharma-seva-trust-image" data-local-src="./assets/dharma-seva-trust.jpg" aria-label="Dharma Seva Trust image slot"><img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Specified%20work%204.png" alt="Dharma Seva Trust" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+      <div class="work-text-col">
+        <div class="work-meta">India <span class="dot">◆</span> Dec 2022 to Present</div>
+        <div class="work-title">Dharma Seva Trust: Social &amp; Event Operations</div>
+        <p class="work-desc">Managed social presence and on-ground execution, contributing to growth and visibility.</p>
+        <ul class="work-bullets">
+          <li>Scaled YouTube presence <strong>from 0 to ~3,000 subscribers</strong></li>
+          <li>Handled content <strong>creation, editing</strong>, and publishing.</li>
+          <li>Managed <strong>event execution, design, and live streaming.</strong></li>
+          <li>Scaled Instagram from <strong>few 100 to nearly 6500+ followers.</strong></li>
+        </ul>
+        <div class="tags">
+          <span class="tag">#Digital Growth</span>
+          <span class="tag">#Video Production</span>
+          <span class="tag">#Social Media Scaling</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ═══════════════════════════════════
+       SKILLS
+  ═══════════════════════════════════ -->
+  <section id="skill">
+    <div class="s-head">Skills</div>
+    <div class="skills-wrap">
+      <div class="skills-video-bg" data-media-slot="skills-loop-video">
+        <video autoplay muted loop playsinline preload="metadata">
+          <source src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/sill%20section%20video.mp4" type="video/mp4">
+          
+        </video>
+      </div>
+      <div class="skill-orbs">
+        <div class="skill-pill sp1">System Thinking<div class="skill-tip">At Zoho Flow, I built systems that connected partnerships, content, and execution into one growth engine.</div></div>
+        <div class="skill-pill sp2">Workflow &amp; Process Design<div class="skill-tip">At Zoho Concierge and Zoho Flow, I designed workflows that reduced friction and made execution more structured.</div></div>
+        <div class="skill-pill sp3">Design &amp; Video Editing<div class="skill-tip">At Dharma Seva Trust, I created and edited content that helped grow digital reach and audience engagement.</div></div>
+        <div class="skill-pill sp4">Public Speaking<div class="skill-tip">From customer conversations at Zoho Concierge to live coordination at Dharma Seva Trust, I learned to communicate clearly and confidently.</div></div>
+        <div class="skill-pill sp5">Product Marketing<div class="skill-tip">At Zoho Flow, I supported product storytelling through integrations, use cases, and content that drove adoption.</div></div>
+        <div class="skill-pill sp6">Cross-functional Execution<div class="skill-tip">Worked across partnerships, marketing, consulting, implementation, content, and operations—bridging teams instead of operating within silos.</div></div>
+        <div class="skill-pill sp7">Strategic Communication<div class="skill-tip">Simplified technical systems into customer-facing narratives, workflow explanations, presentations, and conversion-focused discussions.</div></div>
+        <div class="skill-pill sp8">Ecosystem Thinking<div class="skill-tip">Approached products as connected systems—focusing on scalability, interoperability, and long-term operational fit instead of isolated tools.</div></div>
+        <div class="skill-pill sp9">Content Distribution<div class="skill-tip">At Dharma Seva Trust, I grew distribution through Instagram, YouTube, and community channels from scratch.</div></div>
+        <div class="skill-pill sp10">Event Management<div class="skill-tip">At Dharma Seva Trust, I handled event materials, coordination, and live streaming to support smooth execution.</div></div>
+        <div class="skill-pill sp11">Partnership Operations<div class="skill-tip">At Zoho Flow, I worked on partnerships by aligning platforms, execution, and customer needs.</div></div>
+        <div class="skill-pill sp12">AI-assisted System Building<div class="skill-tip">Across Zoho Flow and Dharma Seva Trust, I used AI to speed up editing, documentation, and content workflows.</div></div>
+        <div class="skill-pill sp13">Automation<div class="skill-tip">At Zoho Flow, I built systems that reduced manual work and made content and operations easier to scale.</div></div>
+        <div class="skill-pill sp14">Execution Ownership<div class="skill-tip">Handled projects end-to-end—from ideation and planning to implementation, distribution, launch coordination, and optimization.</div></div>
+        <div class="skill-pill sp15">Creative AI Operations<div class="skill-tip">Combined AI platforms with design to produce high-quality outputs while optimizing model selection and usage efficiency across platforms.</div></div>
+        <div class="skill-pill sp16">Technical Translation<div class="skill-tip">Bridged the gap between business requirements and technical implementation through workflow breakdowns, mock systems, and simplified communication.</div></div>
+      </div>
+      </div>
+  </section>
+  <!-- ═══════════════════════════════════
+       BEYOND THE PORTFOLIO
+  ═══════════════════════════════════ -->
+  <section id="beyond">
+    <div class="beyond-head">Beyond the portfolio</div>
+    <div class="beyond-grid">
+      <div>
+        <div class="beyond-photo media-provision" data-media-slot="beyond-profile-image" data-local-src="./assets/beyond-profile.jpg"><img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/beyond%20the%20portfolio%20-%20headshot.png" alt="Vijay Anandasamy" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+      </div>
+      <div>
+        <div class="b-row"><div class="rl">Based in:</div><div class="rv">Chennai, Tamil Nadu, India</div></div>
+        <div class="b-row"><div class="rl">Languages:</div><div class="rv">Tamil (native), English (fluent), Hindi (fluent)</div></div>
+        <div class="b-row"><div class="rl">Studies:</div><div class="rv">Kendriya Vidyalaya, Zoho Schools of Business, Zoho Schools of Design, BBA from Manipal University</div></div>
+        <div class="b-row"><div class="rl">Off the clock:</div><div class="rv">Cooking, drawing, basketball, Sculpting</div></div>
+        <div class="b-row"><div class="rl">Current obsession</div><div class="rv">Building and applying AI-driven approaches across everything I work on. Comfortable working with tools like ChatGPT, Gemini, Claude, Midjourney, and video generation platforms</div></div>
+        <div class="b-row">
+          <div class="rl">How colleagues describe me:</div>
+          <div class="ctags">
+            <span class="ctag">Presenter</span><span class="ctag">Public speaker</span>
+            <span class="ctag">Fun to work with</span><span class="ctag">Loyal</span><span class="ctag-row-break" aria-hidden="true"></span>
+            <span class="ctag">Perfectionist</span><span class="ctag">Thinker</span>
+            <span class="ctag">Curious</span><span class="ctag">Competitive</span>
+          </div>
+        </div>
+        <div class="beyond-quote-block">
+          <p class="bq-intro">I strongly relate to the idea:</p>
+          <p class="bq">"Loyalty is a two-way street. If I expect it, I give it."</p>
+          <p class="b-bio">That's how I approach everything—people, work, and opportunities. I've always tried to give back to what has supported me—whether it's the people I work with, the organizations I've been part of, or the systems I've grown in.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ═══════════════════════════════════
+       FOOTER / CONTACT
+  ═══════════════════════════════════ -->
+  <section id="contact">
+    <div class="footer-name">VIJAY ANANDASAMY</div>
+    <div class="ticker-wrap">
+      <div class="ticker-inner">
+        Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp;&nbsp;
+        Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp;
+      </div>
+    </div>
+
+    <!-- Email row -->
+    <div class="contact-row">
+      <img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/final%20mail%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/final%20mail%20logo.png" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
+      <a href="mailto:vijayanandasamy@gmail.com">vijayanandasamy@gmail.com</a>
+    </div>
+    <!-- Phone row -->
+    <div class="contact-row" style="margin-bottom:36px;">
+      <img src="./assets/phone-icon.svg" data-local-src="./assets/phone-icon.svg" data-media-slot="phone-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Phone" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
+      <span>+91 9043922545</span>
+    </div>
+
+    <!-- 3 icon circles: WhatsApp, Email, LinkedIn -->
+    <div class="footer-icons">
+      <!-- Circle 1: WhatsApp -->
+      <a href="https://wa.me/919043922545" target="_blank" rel="noopener" class="fi-circle" title="WhatsApp">
+        <img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/whatsapp.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/whatsapp.png" data-media-slot="whatsapp-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="WhatsApp" style="width:44px;height:44px;object-fit:contain;border-radius:50%;">
+      </a>
+      <!-- Circle 2: Email -->
+      <a href="mailto:vijayanandasamy@gmail.com" class="fi-circle" title="Email">
+        <img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/final%20mail%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/final%20mail%20logo.png" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:40px;height:40px;object-fit:contain;">
+      </a>
+      <!-- Circle 3: LinkedIn -->
+      <a href="https://www.linkedin.com/in/vijay-anandasamy" target="_blank" rel="noopener" class="fi-circle" title="LinkedIn">
+        <img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/link%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/link%20logo.png" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:40px;height:40px;object-fit:contain;border-radius:8px;">
+      </a>
+    </div>
+    <p style="margin-top:40px;font-family:'Poppins',sans-serif;font-size:13px;color:#bbb;">© 2025 Vijay Anandasamy. All rights reserved.</p>
+  </section>
+
+</div><!-- END MAIN PAGE -->
+
+<div class="page" id="page-flow">
+  <nav>
+  <img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Website%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Website%20logo.png" data-media-slot="logo" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="VA" onclick="window.location.reload()" style="height:48px;width:48px;object-fit:contain;display:block;cursor:pointer;border-radius:10px;" title="Vijay Anandasamy">
+  <div class="nav-pills">
+    <a href="#" onclick="goTo('page-main');return false;">About</a>
+    <a class="active">Work</a>
+    <a href="#" onclick="navToMain('skill');return false;">Skill</a>
+    <a href="#" onclick="navToMain('contact');return false;">Contact</a>
+  </div>
+  <div class="nav-social nav-fade-group">
+    <a href="https://www.linkedin.com/in/vijay-anandasamy" target="_blank" rel="noopener" title="LinkedIn"><img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/link%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/link%20logo.png" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
+    <a href="https://www.instagram.com/vijayanandasamy8/?hl=en" target="_blank" rel="noopener" title="Instagram"><img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Instagram%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Instagram%20logo.png" data-media-slot="instagram-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Instagram" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
+  </div>
+</nav>
+  <a class="back-btn" href="#" onclick="goTo('page-main');return false;">← Back</a>
+  <div style="padding-top:0;">
+    <div class="sa-hero media-provision" data-media-slot="zoho-flow-image" data-local-src="./assets/zoho-flow.jpg"><img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/specified%20work%201.png" alt="Zoho Flow" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;top:0;left:0;">
+      <div class="sa-hero-overlay">
+        <div class="sa-tags"><span class="sa-tag">#AI-Powered Automation</span><span class="sa-tag">#Go-To-Market</span><span class="sa-tag">#API &amp; Integration Thinking</span></div>
+        <div class="sa-title">Zoho Flow</div>
+        <div class="sa-subtitle">India <span class="dot">◆</span> Global <span class="dot">◆</span> Nov 2023 to 2026</div>
+      </div>
+
+      <div class="scroll-hint">
+        <span>Scroll</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+          <path d="M12 5v14M5 12l7 7 7-7"/>
+        </svg>
+      </div>
+    </div>
+    <div class="sa-body"><div class="sa-ol">Overview:</div>
+<p>Zoho Flow is where I started working in <strong>Product Marketing and Partnerships Operations</strong>, with an initial focus on bringing in new partnerships from third-party platforms.</p>
+<p>Over time, my contribution extended beyond partnership acquisition. I worked on creating <strong>integration-related marketing content</strong>, <strong>generating use cases based on customer needs</strong>, and coordinating with teams to <strong>support integration launches from start to go-live.</strong></p>
+<p>My role expanded across <strong>partnerships, product, marketing, and internal systems</strong> — not as separate functions, but as connected parts of the same workflow.</p>
+<p>What started as working on integrations evolved into understanding how systems are built, how products scale, and how execution needs to be structured across teams.</p>
+<div class="sa-metrics">
+  <div class="sa-metric"><div class="mn" data-target="100" data-suffix="+"><span class="cn">0</span>+</div><div class="mt">Partnerships</div><div class="md">Built by aligning the right platforms with real customer needs and securing partner visibility</div></div>
+  <div class="sa-metric"><div class="mn" data-target="25000" data-suffix="+"><span class="cn">0</span>+</div><div class="mt">Templates</div><div class="md">Turned into a core product advantage — strengthening positioning and supporting every key negotiation</div></div>
+  <div class="sa-metric"><div class="mn" style="font-size:clamp(28px,4vw,54px);letter-spacing:0">End-to-end</div><div class="mt">Integration lifecycle managed</div><div class="md">Drove integrations from build to go-live by coordinating across development and marketing</div></div>
+</div>
+<div class="sa-lbl">The Challenge</div><div class="sa-sub2">Scaling without structure</div>
+<ul class="sa-list"><li>At Zoho Flow, partnerships and integrations grew fast—but systems didn't.</li><li>Each integration required coordination across teams, yet there was no clear workflow. This led to delays, repeated effort, and unclear ownership.</li><li>Content and documentation had to be created for every app, but without structure, it became inconsistent and hard to maintain at scale.</li><li>As growth increased, operations became heavier—not smoother.</li></ul>
+<div class="sa-sub2">Where I Stepped In:</div>
+<ul class="sa-list"><li>At Zoho Flow, I focused on building systems that could support growth without increasing operational load.</li><li>I introduced a centralized tracking system to monitor all live integrations and their stages across the partnership lifecycle—bringing visibility and reducing coordination gaps.</li><li>To address documentation delays, I built an AI-driven system that automatically generates help documentation when an integration goes live, reducing turnaround time from weeks to days.</li><li>Built a support-driven system that leverages customer query data from existing tickets to identify recurring problems and convert them into valuable painpoint-driven content assets for marketing team</li></ul>
+<div class="sa-lbl">Reflection</div>
+<ul class="sa-list"><li>At Zoho Flow, I realized that growth without structure breaks fast.</li><li>You can push integrations, create content, and manage partners—but without systems, everything becomes reactive.</li><li>My shift was simple: stop solving tasks, start fixing the system behind them. That's what makes scale sustainable.</li></ul>
+<div class="next-proj"><div class="next-name"><span style="cursor:pointer;" onclick="goTo(\'page-jumpstart\')">Zoho Jumpstart</span></div><div class="next-actions"><button class="view-btn secondary" onclick="goTo('page-main');setTimeout(()=>document.getElementById('work').scrollIntoView({behavior:'smooth'}),80)">← Back</button><button class="view-btn" onclick="goTo('page-jumpstart')">Next →</button></div></div></div>
+  </div>
+  <!-- ── Contact section (same as home page) ── -->
+  <section class="contact-section">
+
+    <div class="footer-name">VIJAY ANANDASAMY</div>
+    <div class="ticker-wrap">
+      <div class="ticker-inner">
+        Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp;&nbsp;
+        Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp;
+      </div>
+    </div>
+
+    <!-- Email row -->
+    <div class="contact-row">
+      <img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/final%20mail%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/final%20mail%20logo.png" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
+      <a href="mailto:vijayanandasamy@gmail.com">vijayanandasamy@gmail.com</a>
+    </div>
+    <!-- Phone row -->
+    <div class="contact-row" style="margin-bottom:36px;">
+      <img src="./assets/phone-icon.svg" data-local-src="./assets/phone-icon.svg" data-media-slot="phone-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Phone" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
+      <span>+91 9043922545</span>
+    </div>
+
+    <!-- 3 icon circles: WhatsApp, Email, LinkedIn -->
+    <div class="footer-icons">
+      <!-- Circle 1: WhatsApp -->
+      <a href="https://wa.me/919043922545" target="_blank" rel="noopener" class="fi-circle" title="WhatsApp">
+        <img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/whatsapp.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/whatsapp.png" data-media-slot="whatsapp-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="WhatsApp" style="width:44px;height:44px;object-fit:contain;border-radius:50%;">
+      </a>
+      <!-- Circle 2: Email -->
+      <a href="mailto:vijayanandasamy@gmail.com" class="fi-circle" title="Email">
+        <img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/final%20mail%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/final%20mail%20logo.png" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:40px;height:40px;object-fit:contain;">
+      </a>
+      <!-- Circle 3: LinkedIn -->
+      <a href="https://www.linkedin.com/in/vijay-anandasamy" target="_blank" rel="noopener" class="fi-circle" title="LinkedIn">
+        <img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/link%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/link%20logo.png" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:40px;height:40px;object-fit:contain;border-radius:8px;">
+      </a>
+    </div>
+    <p style="margin-top:40px;font-family:'Poppins',sans-serif;font-size:13px;color:#bbb;">© 2025 Vijay Anandasamy. All rights reserved.</p>
+    </section>
+  </div>
+</div>
+
+<div class="page" id="page-jumpstart">
+  <nav>
+  <img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Website%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Website%20logo.png" data-media-slot="logo" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="VA" onclick="window.location.reload()" style="height:48px;width:48px;object-fit:contain;display:block;cursor:pointer;border-radius:10px;" title="Vijay Anandasamy">
+  <div class="nav-pills">
+    <a href="#" onclick="goTo('page-main');return false;">About</a>
+    <a class="active">Work</a>
+    <a href="#" onclick="navToMain('skill');return false;">Skill</a>
+    <a href="#" onclick="navToMain('contact');return false;">Contact</a>
+  </div>
+  <div class="nav-social nav-fade-group">
+    <a href="https://www.linkedin.com/in/vijay-anandasamy" target="_blank" rel="noopener" title="LinkedIn"><img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/link%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/link%20logo.png" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
+    <a href="https://www.instagram.com/vijayanandasamy8/?hl=en" target="_blank" rel="noopener" title="Instagram"><img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Instagram%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Instagram%20logo.png" data-media-slot="instagram-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Instagram" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
+  </div>
+</nav>
+  <a class="back-btn" href="#" onclick="goTo('page-main');return false;">← Back</a>
+  <div style="padding-top:0;">
+    <div class="sa-hero media-provision" data-media-slot="zoho-jumpstart-image" data-local-src="./assets/zoho-jumpstart.jpg"><img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Specified%20work%202.png" alt="Zoho Jumpstart" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;top:0;left:0;">
+      <div class="sa-hero-overlay">
+        <div class="sa-tags"><span class="sa-tag">#Solution Consulting</span><span class="sa-tag">#Cross-Platform System Design</span><span class="sa-tag">#Implementation</span></div>
+        <div class="sa-title">Zoho Jumpstart</div>
+        <div class="sa-subtitle">India <span class="dot">◆</span> Global <span class="dot">◆</span> Jun 2023 to Nov 2023</div>
+      </div>
+
+      <div class="scroll-hint">
+        <span>Scroll</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+          <path d="M12 5v14M5 12l7 7 7-7"/>
+        </svg>
+      </div>
+    </div>
+    <div class="sa-body"><div class="sa-ol">Overview:</div>
+<p>Zoho Jumpstart was where I moved from structured learning to real-world execution.</p>
+<p>I worked directly on customer deals—<strong>understanding business problems,</strong> mapping them to Zoho applications, and <strong>implementing solutions end-to-end</strong>. The role required handling both consulting and implementation, with <strong>ownership across the entire delivery cycle</strong>.</p>
+<p>This phase demanded strong solution mapping and <strong>deep product understanding</strong>—not just across Zoho applications, but also third-party tools like Xero, Salesforce, Eventbrite, WordPress, and more.</p>
+<p>Alongside primary deal ownership, I also contributed as a co-implementer on parallel engagements across regions, requiring constant context switching and bandwidth management.</p>
+<div class="sa-metrics">
+  <div class="sa-metric"><div class="mn" data-target="23000" data-prefix="$" data-suffix="+"><span class="cn">0</span>+</div><div class="mt">Deals handled</div><div class="md">Contributed to customer deal execution within the first few months of onboarding</div></div>
+  <div class="sa-metric"><div class="mn" data-target="70" data-suffix="+"><span class="cn">0</span>+</div><div class="mt">SaaS Application Mastery</div><div class="md">Developed deep working knowledge across the entire Zoho ecosystem and 3rd party applications</div></div>
+  <div class="sa-metric"><div class="mn" style="font-size:clamp(28px,4vw,54px);letter-spacing:0">Multi-region</div><div class="mt">India, ANZ &amp; US</div><div class="md">Worked across Indian, ANZ, and US shifts—managing overlapping timelines and expectations</div></div>
+</div>
+<div class="sa-lbl">The Challenge</div><div class="sa-sub2">Execution across regions and constraints</div>
+<ul class="sa-list"><li>Customer requirements were often unclear and constantly evolving.</li><li>Each deal required quick understanding, strong solution mapping, and immediate execution—without a fixed play book. At the same time, I was working across Indian, ANZ, and US shifts, managing overlapping timelines and expectations.</li><li>Balancing multiple deals, roles, and time zones made bandwidth a constant constraint.</li><li>The challenge was not just to deliver—but to deliver consistently under pressure.</li></ul>
+<div class="sa-sub2">Where I Stepped In:</div>
+<ul class="sa-list"><li>I focused on structuring my approach to execution.</li><li>While handling implementations, I also started understanding technical constraints—identifying where complexity existed and working with developers to suggest fixes or alternative approaches.</li><li>To manage overlapping work across regions, I built internal systems for calendar and workload management—ensuring no conflicts in calls or delivery timelines.</li><li>On the sales side, I focused on demonstrating value early—creating mock setups before follow-up calls, showing customers a near-working system.</li></ul>
+<div class="sa-lbl">Reflection</div>
+<ul class="sa-list"><li>At Zoho Jumpstart, I learned that execution is not just about doing the work—it's about handling complexity under constraints.</li><li>Working across regions, roles, and systems forced me to think clearly, adapt quickly, and deliver without dependency.</li><li>This phase built my foundation in solution mapping, product understanding, and execution discipline.</li></ul>
+<div class="next-proj"><div class="next-name"><span style="cursor:pointer;" onclick="goTo(\'page-concierge\')">Zoho Concierge</span></div><div class="next-actions"><button class="view-btn secondary" onclick="goTo('page-flow')">← Previous</button><button class="view-btn" onclick="goTo('page-concierge')">Next →</button></div></div></div>
+  </div>
+  <!-- ── Contact section (same as home page) ── -->
+  <section class="contact-section">
+
+    <div class="footer-name">VIJAY ANANDASAMY</div>
+    <div class="ticker-wrap">
+      <div class="ticker-inner">
+        Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp;&nbsp;
+        Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp;
+      </div>
+    </div>
+
+    <!-- Email row -->
+    <div class="contact-row">
+      <img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/final%20mail%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/final%20mail%20logo.png" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
+      <a href="mailto:vijayanandasamy@gmail.com">vijayanandasamy@gmail.com</a>
+    </div>
+    <!-- Phone row -->
+    <div class="contact-row" style="margin-bottom:36px;">
+      <img src="./assets/phone-icon.svg" data-local-src="./assets/phone-icon.svg" data-media-slot="phone-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Phone" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
+      <span>+91 9043922545</span>
+    </div>
+
+    <!-- 3 icon circles: WhatsApp, Email, LinkedIn -->
+    <div class="footer-icons">
+      <!-- Circle 1: WhatsApp -->
+      <a href="https://wa.me/919043922545" target="_blank" rel="noopener" class="fi-circle" title="WhatsApp">
+        <img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/whatsapp.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/whatsapp.png" data-media-slot="whatsapp-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="WhatsApp" style="width:44px;height:44px;object-fit:contain;border-radius:50%;">
+      </a>
+      <!-- Circle 2: Email -->
+      <a href="mailto:vijayanandasamy@gmail.com" class="fi-circle" title="Email">
+        <img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/final%20mail%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/final%20mail%20logo.png" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:40px;height:40px;object-fit:contain;">
+      </a>
+      <!-- Circle 3: LinkedIn -->
+      <a href="https://www.linkedin.com/in/vijay-anandasamy" target="_blank" rel="noopener" class="fi-circle" title="LinkedIn">
+        <img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/link%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/link%20logo.png" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:40px;height:40px;object-fit:contain;border-radius:8px;">
+      </a>
+    </div>
+    <p style="margin-top:40px;font-family:'Poppins',sans-serif;font-size:13px;color:#bbb;">© 2025 Vijay Anandasamy. All rights reserved.</p>
+    </section>
+  </div>
+</div>
+
+<div class="page" id="page-concierge">
+  <nav>
+  <img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Website%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Website%20logo.png" data-media-slot="logo" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="VA" onclick="window.location.reload()" style="height:48px;width:48px;object-fit:contain;display:block;cursor:pointer;border-radius:10px;" title="Vijay Anandasamy">
+  <div class="nav-pills">
+    <a href="#" onclick="goTo('page-main');return false;">About</a>
+    <a class="active">Work</a>
+    <a href="#" onclick="navToMain('skill');return false;">Skill</a>
+    <a href="#" onclick="navToMain('contact');return false;">Contact</a>
+  </div>
+  <div class="nav-social nav-fade-group">
+    <a href="https://www.linkedin.com/in/vijay-anandasamy" target="_blank" rel="noopener" title="LinkedIn"><img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/link%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/link%20logo.png" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
+    <a href="https://www.instagram.com/vijayanandasamy8/?hl=en" target="_blank" rel="noopener" title="Instagram"><img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Instagram%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Instagram%20logo.png" data-media-slot="instagram-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Instagram" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
+  </div>
+</nav>
+  <a class="back-btn" href="#" onclick="goTo('page-main');return false;">← Back</a>
+  <div style="padding-top:0;">
+    <div class="sa-hero media-provision" data-media-slot="zoho-concierge-image" data-local-src="./assets/zoho-concierge.jpg"><img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Specified%20work%203.png" alt="Zoho Concierge" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;top:0;left:0;">
+      <div class="sa-hero-overlay">
+        <div class="sa-tags"><span class="sa-tag">#Product Ecosystem Mastery</span><span class="sa-tag">#System Thinking</span><span class="sa-tag">#Solution Discovery</span></div>
+        <div class="sa-title">Zoho Concierge</div>
+        <div class="sa-subtitle">India <span class="dot">◆</span> Global <span class="dot">◆</span> Apr 2023 to Nov 2023</div>
+      </div>
+
+      <div class="scroll-hint">
+        <span>Scroll</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+          <path d="M12 5v14M5 12l7 7 7-7"/>
+        </svg>
+      </div>
+    </div>
+    <div class="sa-body"><div class="sa-ol">Overview:</div>
+<p>Zoho Concierge was where I built my foundation in consulting and business problem solving.</p>
+<p>This wasn't just about learning products—it was about understanding how businesses actually operate. I worked on <strong>decoding business processes, mapping customer journeys, and designing workflows that could be implemented</strong> using Zoho applications.</p>
+<p>The role required constant interaction with customers—understanding their needs, pitching solutions, and handling communication.</p>
+<p>More importantly, this is where I developed the ability to <strong>understand any product quickly, break it down, and use it effectively in real scenarios</strong>. It became the base for everything I did later.</p>
+<div class="sa-metrics">
+  <div class="sa-metric"><div class="mn" data-target="10" data-suffix="+"><span class="cn">0</span>+</div><div class="mt">Industries exposed to</div><div class="md">Education, manufacturing, legal, construction, media, accounting, event management, e-commerce, recruitment, marketing</div></div>
+  <div class="sa-metric"><div class="mn" data-target="60" data-suffix="+"><span class="cn">0</span>+</div><div class="mt">Applications worked across</div><div class="md">Developed deep working knowledge across the entire Zoho ecosystem and 3rd party applications</div></div>
+  <div class="sa-metric"><div class="mn" data-target-decimal="1.5" data-suffix=" months" style="font-size:clamp(28px,4vw,54px);letter-spacing:0"><span class="cn">0</span> months</div><div class="mt">Fastest transition to live work</div><div class="md">Moved from training to handling real customer problems ahead of the expected curve</div></div>
+</div>
+<div class="sa-lbl">The Challenge</div><div class="sa-sub2">Understanding businesses without real context</div>
+<ul class="sa-list"><li>At Zoho Concierge, the challenge was not the product—it was the ambiguity of business problems. Customers came in with partial clarity, often describing symptoms instead of actual problems.</li><li>There was no structured playbook for most use cases. Each interaction required quickly understanding the business model, identifying gaps, and mapping it to the right combination of applications—all in real time.</li><li>Balancing learning, customer interaction, and solutioning created constant pressure.</li><li>The challenge was not just to suggest a solution—but to understand the business well enough to suggest the right one.</li></ul>
+<div class="sa-sub2">Where I Stepped In:</div>
+<ul class="sa-list"><li>I worked on understanding business processes, mapping customer journeys, and designing workflows that aligned with how the business operates.</li><li>My approach towards consulting was never about suggestion, but optimization—going a step further and imagining scenarios beyond what was asked.</li><li>Email communication post-call became a crucial factor in converting leads, always including workflow diagrams and theoretical explanations.</li><li>This is also where I developed the skill of cross-selling—encouraging leads to think in terms of ecosystems rather than individual products.</li></ul>
+<div class="sa-lbl">Reflection</div>
+<ul class="sa-list"><li>At Zoho Concierge, I learned that products are easy to learn—business is not.</li><li>The real skill lies in understanding workflows, not just features.</li><li>Once you understand how a business works, you can quickly pick up any product and use it effectively.</li></ul>
+<div class="next-proj"><div class="next-name"><span style="cursor:pointer;" onclick="goTo(\'page-dharma\')">Dharma Seva Trust</span></div><div class="next-actions"><button class="view-btn secondary" onclick="goTo('page-jumpstart')">← Previous</button><button class="view-btn" onclick="goTo('page-dharma')">Next →</button></div></div></div>
+  </div>
+  <!-- ── Contact section (same as home page) ── -->
+  <section class="contact-section">
+
+    <div class="footer-name">VIJAY ANANDASAMY</div>
+    <div class="ticker-wrap">
+      <div class="ticker-inner">
+        Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp;&nbsp;
+        Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp;
+      </div>
+    </div>
+
+    <!-- Email row -->
+    <div class="contact-row">
+      <img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/final%20mail%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/final%20mail%20logo.png" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
+      <a href="mailto:vijayanandasamy@gmail.com">vijayanandasamy@gmail.com</a>
+    </div>
+    <!-- Phone row -->
+    <div class="contact-row" style="margin-bottom:36px;">
+      <img src="./assets/phone-icon.svg" data-local-src="./assets/phone-icon.svg" data-media-slot="phone-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Phone" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
+      <span>+91 9043922545</span>
+    </div>
+
+    <!-- 3 icon circles: WhatsApp, Email, LinkedIn -->
+    <div class="footer-icons">
+      <!-- Circle 1: WhatsApp -->
+      <a href="https://wa.me/919043922545" target="_blank" rel="noopener" class="fi-circle" title="WhatsApp">
+        <img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/whatsapp.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/whatsapp.png" data-media-slot="whatsapp-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="WhatsApp" style="width:44px;height:44px;object-fit:contain;border-radius:50%;">
+      </a>
+      <!-- Circle 2: Email -->
+      <a href="mailto:vijayanandasamy@gmail.com" class="fi-circle" title="Email">
+        <img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/final%20mail%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/final%20mail%20logo.png" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:40px;height:40px;object-fit:contain;">
+      </a>
+      <!-- Circle 3: LinkedIn -->
+      <a href="https://www.linkedin.com/in/vijay-anandasamy" target="_blank" rel="noopener" class="fi-circle" title="LinkedIn">
+        <img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/link%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/link%20logo.png" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:40px;height:40px;object-fit:contain;border-radius:8px;">
+      </a>
+    </div>
+    <p style="margin-top:40px;font-family:'Poppins',sans-serif;font-size:13px;color:#bbb;">© 2025 Vijay Anandasamy. All rights reserved.</p>
+    </section>
+  </div>
+</div>
+
+<div class="page" id="page-dharma">
+  <nav>
+  <img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Website%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Website%20logo.png" data-media-slot="logo" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="VA" onclick="window.location.reload()" style="height:48px;width:48px;object-fit:contain;display:block;cursor:pointer;border-radius:10px;" title="Vijay Anandasamy">
+  <div class="nav-pills">
+    <a href="#" onclick="goTo('page-main');return false;">About</a>
+    <a class="active">Work</a>
+    <a href="#" onclick="navToMain('skill');return false;">Skill</a>
+    <a href="#" onclick="navToMain('contact');return false;">Contact</a>
+  </div>
+  <div class="nav-social nav-fade-group">
+    <a href="https://www.linkedin.com/in/vijay-anandasamy" target="_blank" rel="noopener" title="LinkedIn"><img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/link%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/link%20logo.png" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
+    <a href="https://www.instagram.com/vijayanandasamy8/?hl=en" target="_blank" rel="noopener" title="Instagram"><img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Instagram%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Instagram%20logo.png" data-media-slot="instagram-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Instagram" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
+  </div>
+</nav>
+  <a class="back-btn" href="#" onclick="goTo('page-main');return false;">← Back</a>
+  <div style="padding-top:0;">
+    <div class="sa-hero media-provision" data-media-slot="dharma-seva-trust-image" data-local-src="./assets/dharma-seva-trust.jpg"><img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/Specified%20work%204.png" alt="Dharma Seva Trust" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;top:0;left:0;">
+      <div class="sa-hero-overlay">
+        <div class="sa-tags"><span class="sa-tag">#Digital Growth</span><span class="sa-tag">#Video Production</span><span class="sa-tag">#Social Media Scaling</span></div>
+        <div class="sa-title">Dharma Seva Trust</div>
+        <div class="sa-subtitle">India <span class="dot">◆</span> Global <span class="dot">◆</span> Dec 2022 to Present</div>
+      </div>
+
+      <div class="scroll-hint">
+        <span>Scroll</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+          <path d="M12 5v14M5 12l7 7 7-7"/>
+        </svg>
+      </div>
+    </div>
+    <div class="sa-body"><div class="sa-ol">Overview:</div>
+<p>As a trustee at Dharma Seva Trust, I was involved across both digital and on-ground execution.</p>
+<p>On the digital side, I <strong>managed the social presence and YouTube channel—handling content creation, editing, and publishing</strong>. This led to scaling the YouTube channel from 0 to nearly 3,000 subscribers, and growing the Instagram handle from 0 to 6,000+ followers.</p>
+<p>Through consistent video production and distribution, we achieved an average monthly reach of 8,000+ viewers on YouTube and nearly 5 lakh organic views per month on Instagram, driven primarily through <strong>AI-assisted video editing and content optimization.</strong></p>
+<p>On the execution side, I worked on events—<strong>handling design materials, coordinating activities, and ensuring smooth execution.</strong> I also managed live streaming, extending the reach of events beyond physical presence.</p>
+<div class="sa-metrics">
+  <div class="sa-metric"><div class="mn" data-target="6000" data-suffix="+"><span class="cn">0</span>+</div><div class="mt">Followers</div><div class="md">Built and scaled the Instagram presence from scratch through consistent content and distribution.</div></div>
+  <div class="sa-metric"><div class="mn" data-target="500000" data-locale="en-IN" data-suffix="+" style="font-size:clamp(28px,4vw,54px);letter-spacing:0"><span class="cn">0</span>+</div><div class="mt">Monthly views</div><div class="md">Achieved consistent organic reach through AI-assisted editing and distribution strategies.</div></div>
+  <div class="sa-metric"><div class="mn" data-target="3000" data-suffix="+"><span class="cn">0</span>+</div><div class="mt">Subscribers</div><div class="md">Grew the YouTube channel organically through regular posting and content optimization.</div></div>
+</div>
+<div class="sa-lbl">The Challenge</div><div class="sa-sub2">Starting without an audience</div>
+<ul class="sa-list"><li>There was no existing audience or structure. Content and distribution had to be built from scratch through consistent output, quality editing, and deliberate distribution.</li></ul>
+<div class="sa-sub2">Where I Stepped In:</div>
+<ul class="sa-list"><li>There was minimal existing audience and no defined system for content or distribution.</li><li>I supported content creation and focused on making videos visually strong using AI-assisted editing. At the same time, I worked on improving distribution—leveraging WhatsApp communities, Instagram reach strategies, and consistent posting to build traction.</li><li>The approach was simple: show up consistently, improve content quality, and push distribution across every available channel.</li></ul>
+<div class="sa-lbl">Reflection</div>
+<ul class="sa-list"><li>Consistency drives growth. Doing the basics right—repeatedly—is what builds visibility over time.</li></ul>
+<div class="next-proj"><div class="next-lbl"></div><div class="next-name" style="color:#aaa;font-size:22px;">End of selected work</div><div class="next-actions"><button class="view-btn secondary" onclick="goTo('page-concierge')">← Previous</button><button class="view-btn" onclick="goTo('page-main');setTimeout(()=>document.getElementById('work').scrollIntoView({behavior:'smooth'}),80)">Back</button></div></div></div>
+  </div>
+  <!-- ── Contact section (same as home page) ── -->
+  <section class="contact-section">
+
+    <div class="footer-name">VIJAY ANANDASAMY</div>
+    <div class="ticker-wrap">
+      <div class="ticker-inner">
+        Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp;&nbsp;
+        Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp; Let's work together &nbsp;✳&nbsp;
+      </div>
+    </div>
+
+    <!-- Email row -->
+    <div class="contact-row">
+      <img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/final%20mail%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/final%20mail%20logo.png" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
+      <a href="mailto:vijayanandasamy@gmail.com">vijayanandasamy@gmail.com</a>
+    </div>
+    <!-- Phone row -->
+    <div class="contact-row" style="margin-bottom:36px;">
+      <img src="./assets/phone-icon.svg" data-local-src="./assets/phone-icon.svg" data-media-slot="phone-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Phone" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
+      <span>+91 9043922545</span>
+    </div>
+
+    <!-- 3 icon circles: WhatsApp, Email, LinkedIn -->
+    <div class="footer-icons">
+      <!-- Circle 1: WhatsApp -->
+      <a href="https://wa.me/919043922545" target="_blank" rel="noopener" class="fi-circle" title="WhatsApp">
+        <img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/whatsapp.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/whatsapp.png" data-media-slot="whatsapp-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="WhatsApp" style="width:44px;height:44px;object-fit:contain;border-radius:50%;">
+      </a>
+      <!-- Circle 2: Email -->
+      <a href="mailto:vijayanandasamy@gmail.com" class="fi-circle" title="Email">
+        <img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/final%20mail%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/final%20mail%20logo.png" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:40px;height:40px;object-fit:contain;">
+      </a>
+      <!-- Circle 3: LinkedIn -->
+      <a href="https://www.linkedin.com/in/vijay-anandasamy" target="_blank" rel="noopener" class="fi-circle" title="LinkedIn">
+        <img src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/link%20logo.png" data-local-src="https://raw.githubusercontent.com/Vijay-Anandasamy/Portfolio-website/main/link%20logo.png" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:40px;height:40px;object-fit:contain;border-radius:8px;">
+      </a>
+    </div>
+    <p style="margin-top:40px;font-family:'Poppins',sans-serif;font-size:13px;color:#bbb;">© 2025 Vijay Anandasamy. All rights reserved.</p>
+    </section>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════
+   PAGE NAVIGATION
+════════════════════════════════════════ */
+function goTo(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  // Reset & re-trigger counters on standalone pages
+  if (id !== 'page-main') {
+    const page = document.getElementById(id);
+    if (page) {
+      // Reset all counters so they animate again
+      page.querySelectorAll('[data-target], [data-target-decimal]').forEach(el => {
+        delete el.dataset.counted;
+        const span = el.querySelector('.cn');
+        if (span) span.textContent = '0';
+      });
+      setTimeout(() => {
+        const metrics = page.querySelector('.sa-metrics');
+        if (metrics) animateCounters(metrics);
+      }, 200);
+    }
+  }
+}
+
+// Navigate to a section on the main page with correct scroll accounting for sticky hero
+function navToSection(sectionId) {
+  // If not on main page, switch first
+  if (!document.getElementById('page-main').classList.contains('active')) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-main').classList.add('active');
+  }
+  setTimeout(() => {
+    const el = document.getElementById(sectionId);
+    if (el) {
+      const y = el.getBoundingClientRect().top + window.scrollY - 100;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  }, 50);
+}
+function navToMain(section) {
+  goTo('page-main');
+  setTimeout(() => {
+    const el = document.getElementById(section);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }, 60);
+}
+function setActive(el) {
+  document.querySelectorAll('#main-nav .nav-pills a').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+}
+
+/* ════════════════════════════════════════
+   HERO SCROLL-DRIVEN SLIDE SYSTEM
+   
+   #hero-outer is 400vh tall.
+   As user scrolls through it, we map scroll 
+   progress → which slide to show.
+   Each slide occupies 1/4 of the scroll range.
+   Transition: fade + slight translateY.
+════════════════════════════════════════ */
+const TOTAL_SLIDES = 4;
+let currentSlide = 0;
+let impactCounted = false;
+
+function getHeroScrollProgress() {
+  const outer = document.getElementById('hero-outer');
+  if (!outer) return 0;
+  const rect = outer.getBoundingClientRect();
+  const outerH = outer.offsetHeight; // 400vh
+  const viewH = window.innerHeight;
+  // scrolled distance into the outer element
+  const scrolled = -rect.top;
+  // total scrollable range = outerH - viewH
+  const range = outerH - viewH;
+  return Math.max(0, Math.min(1, scrolled / range));
+}
+
+function updateHeroSlide(progress) {
+  // Map 0-1 progress → slide index 0-3
+  const rawSlide = progress * TOTAL_SLIDES;
+  const newSlide = Math.min(TOTAL_SLIDES - 1, Math.floor(rawSlide));
+  
+  if (newSlide === currentSlide) return;
+  
+  const prev = document.getElementById('slide-' + currentSlide);
+  const next = document.getElementById('slide-' + newSlide);
+  
+  if (!prev || !next) return;
+  
+  // Determine direction
+  const goingDown = newSlide > currentSlide;
+  
+  // Exit current slide
+  prev.classList.remove('slide-active');
+  if (goingDown) {
+    prev.style.transform = 'translateY(-28px)';
+  } else {
+    prev.style.transform = 'translateY(28px)';
+  }
+  prev.style.opacity = '0';
+  prev.style.pointerEvents = 'none';
+  
+  // Enter next slide
+  next.style.transition = 'none';
+  if (goingDown) {
+    next.style.transform = 'translateY(28px)';
+  } else {
+    next.style.transform = 'translateY(-28px)';
+  }
+  next.style.opacity = '0';
+  
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      next.style.transition = 'opacity 0.55s ease, transform 0.55s ease';
+      next.style.opacity = '1';
+      next.style.transform = 'translateY(0)';
+      next.style.pointerEvents = 'auto';
+    });
+  });
+  
+  currentSlide = newSlide;
+  
+  // Update dots
+  document.querySelectorAll('.hero-dot').forEach((dot, i) => {
+    dot.classList.toggle('active', i === currentSlide);
+  });
+  
+  // Trigger counter when impact slide (slide 3) becomes visible
+  if (currentSlide === 3 && !impactCounted) {
+    impactCounted = true;
+    setTimeout(() => animateCounters(document.getElementById('slide-3')), 200);
+  }
+}
+
+function jumpToSlide(index) {
+  const outer = document.getElementById('hero-outer');
+  if (!outer) return;
+  const outerH = outer.offsetHeight;
+  const viewH = window.innerHeight;
+  const range = outerH - viewH;
+  const targetProgress = index / TOTAL_SLIDES + 0.01;
+  const targetScroll = outer.offsetTop + targetProgress * range;
+  window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+}
+
+// Reset slide styles on load
+document.querySelectorAll('.hero-slide').forEach((s, i) => {
+  if (i === 0) {
+    s.style.opacity = '1';
+    s.style.transform = 'translateY(0)';
+    s.style.pointerEvents = 'auto';
+  } else {
+    s.style.opacity = '0';
+    s.style.transform = 'translateY(28px)';
+    s.style.pointerEvents = 'none';
+  }
+});
+
+/* ════════════════════════════════════════
+   SCROLL LISTENER
+════════════════════════════════════════ */
+window.addEventListener('scroll', () => {
+  if (!document.getElementById('page-main').classList.contains('active')) return;
+  
+  const progress = getHeroScrollProgress();
+  updateHeroSlide(progress);
+  
+  // Nav scroll spy — when 'beyond' is reached, highlight 'contact'
+  const ids = ['about','work','skill','beyond','contact'];
+  let cur = 'about';
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < 100) cur = id;
+  });
+  // beyond section → contact nav link gets highlighted
+  const navCur = cur === 'beyond' ? 'contact' : cur;
+  document.querySelectorAll('#main-nav .nav-pills a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + navCur);
+  });
+
+  // Fade logo + social icons when scrolled past 60px — only pills stay
+  const hasScrolled = window.scrollY > 60;
+  document.querySelectorAll('.nav-fade-item, .nav-fade-group').forEach(el => {
+    el.style.opacity = hasScrolled ? '0' : '1';
+    el.style.pointerEvents = hasScrolled ? 'none' : 'auto';
+  });
+}, { passive: true });
+
+/* ════════════════════════════════════════
+   VIDEO PLACEHOLDER
+════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  const vid = document.getElementById('hero-vid');
+  const src = vid && vid.querySelector('source');
+  const ph  = document.getElementById('vid-placeholder');
+  if (src && src.getAttribute('src') && src.getAttribute('src').trim() !== '') {
+    if (ph) ph.style.display = 'none';
+  }
+});
+
+/* ════════════════════════════════════════
+   COUNTER ANIMATION
+════════════════════════════════════════ */
+function animateCounters(container) {
+  if (!container) return;
+  // Integer counters
+  container.querySelectorAll('[data-target]').forEach(el => {
+    if (el.dataset.counted === '1') return;
+    el.dataset.counted = '1';
+    const target = parseInt(el.dataset.target);
+    const span = el.querySelector('.cn');
+    if (!span) return;
+    let start = null;
+    const duration = 1800;
+    const step = ts => {
+      if (!start) start = ts;
+      const progress = Math.min((ts - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      span.textContent = Math.floor(ease * target).toLocaleString(el.dataset.locale || undefined);
+      if (progress < 1) requestAnimationFrame(step);
+      else span.textContent = target.toLocaleString(el.dataset.locale || undefined);
+    };
+    requestAnimationFrame(step);
+  });
+  // Decimal counters (e.g. 1.5 months)
+  container.querySelectorAll('[data-target-decimal]').forEach(el => {
+    if (el.dataset.counted === '1') return;
+    el.dataset.counted = '1';
+    const target = parseFloat(el.dataset.targetDecimal);
+    const span = el.querySelector('.cn');
+    if (!span) return;
+    let start = null;
+    const duration = 1200;
+    const step = ts => {
+      if (!start) start = ts;
+      const progress = Math.min((ts - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      span.textContent = (ease * target).toFixed(1);
+      if (progress < 1) requestAnimationFrame(step);
+      else span.textContent = target.toFixed(1);
+    };
+    requestAnimationFrame(step);
+  });
+}
+
+// Also observe .sa-metrics on standalone pages
+const cObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animateCounters(e.target);
+      cObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.sa-metrics').forEach(el => cObs.observe(el));
+
+/* ════════════════════════════════════════
+   FOOTER NAME — FIT TO VIEWPORT WIDTH
+════════════════════════════════════════ */
+function fitName() {
+  const els = document.querySelectorAll('.footer-name');
+  if (!els.length) return;
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  ctx.font = '100px Anton, sans-serif';
+  const textW = ctx.measureText('VIJAY ANANDASAMY').width;
+  const optimal = Math.floor((window.innerWidth * 0.96 / textW) * 100);
+  els.forEach(el => {
+    el.style.fontSize = Math.min(optimal, 200) + 'px';
+  });
+}
+fitName();
+window.addEventListener('resize', fitName);
+</script>
+
+<!-- Custom cursor -->
+<div id="custom-cursor"></div>
+<script>
+(function() {
+  const cursor = document.getElementById('custom-cursor');
+  let mouseX = -100, mouseY = -100;
+  document.addEventListener('mousemove', function(e) {
+    mouseX = e.clientX; mouseY = e.clientY;
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top  = mouseY + 'px';
+  });
+  document.addEventListener('mouseleave', function() {
+    cursor.style.opacity = '0';
+  });
+  document.addEventListener('mouseenter', function() {
+    cursor.style.opacity = '1';
+  });
+  // Grow on clickable elements
+  document.addEventListener('mouseover', function(e) {
+    if (e.target.closest('a,button,[onclick],input,textarea,select,.work-item,.skill-pill,.nav-pills a')) {
+      cursor.classList.add('cursor-hover');
+    }
+  });
+  document.addEventListener('mouseout', function(e) {
+    if (e.target.closest('a,button,[onclick],input,textarea,select,.work-item,.skill-pill,.nav-pills a')) {
+      cursor.classList.remove('cursor-hover');
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
