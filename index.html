@@ -1464,6 +1464,666 @@ nav { top: 18px !important; }
   }
 }
 
+
+/* Final asset wiring for GitHub repository media */
+img[data-media-slot] {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+video[data-media-slot],
+video source[data-media-slot] {
+  visibility: visible !important;
+}
+
+/* Remove dashed placeholder labels once real media paths are used */
+.media-provision::after,
+.beyond-photo:empty::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Selected Work banner images */
+.work-img-col.media-provision {
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+
+.work-img-col[data-media-slot="zoho-flow-image"] {
+  background-image: url("./specified work 1.png") !important;
+}
+
+.work-img-col[data-media-slot="zoho-jumpstart-image"] {
+  background-image: url("./Specified work 2.png") !important;
+}
+
+.work-img-col[data-media-slot="zoho-concierge-image"] {
+  background-image: url("./Specified work 3.png") !important;
+}
+
+.work-img-col[data-media-slot="dharma-seva-trust-image"] {
+  background-image: url("./Specified work 4.png") !important;
+}
+
+/* Beyond portfolio headshot */
+.beyond-photo.media-provision {
+  background-image: url("./beyond the portfolio - headshot.png") !important;
+  background-size: cover !important;
+  background-position: center top !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Standalone page hero images */
+.sa-hero.media-provision {
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+
+.sa-hero[data-media-slot="zoho-flow-image"] {
+  background-image: url("./specified work 1.png") !important;
+}
+
+.sa-hero[data-media-slot="zoho-jumpstart-image"] {
+  background-image: url("./Specified work 2.png") !important;
+}
+
+.sa-hero[data-media-slot="zoho-concierge-image"] {
+  background-image: url("./Specified work 3.png") !important;
+}
+
+.sa-hero[data-media-slot="dharma-seva-trust-image"] {
+  background-image: url("./Specified work 4.png") !important;
+}
+
+/* First fold 3D loop provision */
+.hero-right {
+  background: transparent !important;
+}
+.hero-char-video {
+  display: block !important;
+  opacity: 1 !important;
+}
+
+/* Skill section 3D loop provision */
+.skills-video-bg video {
+  display: block !important;
+  opacity: 1 !important;
+}
+
+
+/* Final visual refinements requested */
+
+/* Beyond the Portfolio image — fill white space more naturally */
+#beyond .beyond-grid {
+  grid-template-columns: 48% 52% !important;
+  gap: 38px !important;
+  align-items: stretch !important;
+}
+
+#beyond .beyond-photo,
+#beyond .beyond-photo.media-provision {
+  width: 92% !important;
+  max-width: 92% !important;
+  height: 100% !important;
+  min-height: 720px !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
+}
+
+#beyond .beyond-photo img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+}
+
+/* Hero video — make it dominate the fold more naturally */
+.hero-right {
+  width: 58vw !important;
+  height: 100vh !important;
+  top: 0 !important;
+  right: -2vw !important;
+  overflow: hidden !important;
+}
+
+.hero-char-video {
+  position: absolute !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: auto !important;
+  height: 100vh !important;
+  min-width: 80vw !important;
+  object-fit: cover !important;
+  object-position: right bottom !important;
+  transform: scale(1.04) !important;
+}
+
+/* Reduce visible whitespace between video edge and fold */
+.hero-right::before {
+  width: 120px !important;
+}
+
+/* Ensure first fold feels visually covered */
+#hero-sticky {
+  overflow: hidden !important;
+}
+
+@media (max-width: 900px) {
+  #beyond .beyond-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  #beyond .beyond-photo,
+  #beyond .beyond-photo.media-provision {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: auto !important;
+    aspect-ratio: 669 / 646 !important;
+  }
+
+  .hero-right {
+    width: 100vw !important;
+    right: 0 !important;
+  }
+
+  .hero-char-video {
+    min-width: 100vw !important;
+    height: 100vh !important;
+  }
+}
+
+
+/* Final icon wiring + skill background video sizing */
+img[data-media-slot] {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+nav img[alt="VA"] {
+  width: 58px !important;
+  height: 58px !important;
+  object-fit: contain !important;
+  border-radius: 14px !important;
+}
+
+.nav-social a img {
+  width: 42px !important;
+  height: 42px !important;
+  object-fit: contain !important;
+}
+
+.contact-row img {
+  width: 30px !important;
+  height: 30px !important;
+  object-fit: contain !important;
+}
+
+.footer-icons .fi-circle img {
+  object-fit: contain !important;
+}
+
+/* Skill section video: 85% of the section, centered, loop-ready */
+.skills-video-bg {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #fff !important;
+}
+
+.skills-video-bg video {
+  width: 85% !important;
+  height: 85% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  display: block !important;
+  margin: auto !important;
+  border-radius: 16px !important;
+}
+
+
+/* Final refinement pass */
+
+/* First fold hero video: reduce dimensions by 10% */
+.hero-char-video {
+  transform: scale(0.94) !important;
+  transform-origin: right bottom !important;
+}
+
+/* Skill background loop video: increase by 10% from previous 85% to ~94% */
+.skills-video-bg video {
+  width: 94% !important;
+  height: 94% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  margin: auto !important;
+}
+
+/* Beyond portfolio headshot: reduce vertical length by 10% from bottom and align cleanly */
+#beyond .beyond-photo,
+#beyond .beyond-photo.media-provision {
+  min-height: 648px !important;
+  height: 648px !important;
+  width: 92% !important;
+  max-width: 92% !important;
+  background-size: cover !important;
+  background-position: center top !important;
+}
+
+#beyond .beyond-photo img {
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+}
+
+/* First quote formatting/alignment */
+.quote-main {
+  white-space: pre-line !important;
+  line-height: 1.18 !important;
+  letter-spacing: 0.4px !important;
+}
+.quote-attr {
+  display: inline !important;
+  margin-left: 8px !important;
+  font-size: 20px !important;
+  vertical-align: baseline !important;
+}
+
+/* App-specific page back button: smaller, transparent fill, orange hover */
+.back-btn {
+  padding: 7px 16px !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  background: transparent !important;
+  border: 1.4px solid var(--black) !important;
+  color: var(--black) !important;
+  border-radius: 100px !important;
+  gap: 6px !important;
+  box-shadow: none !important;
+}
+
+.back-btn:hover {
+  background: var(--orange) !important;
+  color: #fff !important;
+  border-color: var(--orange) !important;
+}
+
+@media (max-width:900px) {
+  .hero-char-video {
+    transform: scale(0.9) !important;
+  }
+  #beyond .beyond-photo,
+  #beyond .beyond-photo.media-provision {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+}
+
+
+/* Beyond portfolio one-fold layout refinement */
+#beyond {
+  padding-top: 34px !important;
+  padding-bottom: 34px !important;
+}
+
+#beyond .beyond-head {
+  margin-bottom: 24px !important;
+}
+
+#beyond .beyond-grid {
+  grid-template-columns: 46% 54% !important;
+  gap: 34px !important;
+  align-items: start !important;
+}
+
+#beyond .beyond-left-stack {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+#beyond .beyond-photo,
+#beyond .beyond-photo.media-provision {
+  width: 84% !important;
+  max-width: 84% !important;
+  height: 430px !important;
+  min-height: 430px !important;
+  background-position: center top !important;
+}
+
+#beyond .beyond-quote-block {
+  width: 92% !important;
+  margin-top: 22px !important;
+  padding-top: 0 !important;
+  text-align: left !important;
+}
+
+#beyond .beyond-quote-block .bq-intro {
+  font-size: 17px !important;
+  margin-bottom: 8px !important;
+}
+
+#beyond .beyond-quote-block .bq {
+  font-size: clamp(22px, 2.1vw, 32px) !important;
+  line-height: 1.12 !important;
+  margin-bottom: 12px !important;
+  white-space: nowrap !important;
+}
+
+#beyond .beyond-quote-block .b-bio {
+  font-size: 18px !important;
+  line-height: 1.5 !important;
+}
+
+#beyond .b-row {
+  padding: 11px 0 !important;
+}
+
+#beyond .b-row .rl {
+  font-size: 19px !important;
+  margin-bottom: 3px !important;
+}
+
+#beyond .b-row .rv {
+  font-size: 19px !important;
+  line-height: 1.48 !important;
+}
+
+#beyond .ctags {
+  gap: 8px !important;
+}
+
+#beyond .ctag {
+  font-size: 18px !important;
+  padding: 5px 12px !important;
+}
+
+@media (max-width: 900px) {
+  #beyond .beyond-grid {
+    grid-template-columns: 1fr !important;
+  }
+  #beyond .beyond-photo,
+  #beyond .beyond-photo.media-provision {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+  #beyond .beyond-quote-block {
+    width: 100% !important;
+  }
+  #beyond .beyond-quote-block .bq {
+    white-space: normal !important;
+  }
+}
+
+
+/* Beyond the Portfolio — reference matched alignment */
+#beyond {
+  padding: 42px 5% 46px !important;
+  background: #fff !important;
+}
+
+#beyond .beyond-head {
+  font-family: 'Anton', sans-serif !important;
+  font-size: clamp(56px, 5.6vw, 84px) !important;
+  line-height: 0.95 !important;
+  margin-bottom: 28px !important;
+  letter-spacing: 0.5px !important;
+}
+
+#beyond .beyond-grid {
+  display: grid !important;
+  grid-template-columns: 44% 56% !important;
+  gap: 54px !important;
+  align-items: start !important;
+}
+
+#beyond .beyond-left-stack {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+}
+
+#beyond .beyond-photo,
+#beyond .beyond-photo.media-provision {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 560px !important;
+  min-height: 560px !important;
+  border-radius: 0 !important;
+  overflow: hidden !important;
+  border: none !important;
+  background-size: cover !important;
+  background-position: center top !important;
+}
+
+#beyond .beyond-photo img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+}
+
+#beyond .beyond-quote-block {
+  width: 100% !important;
+  margin-top: 12px !important;
+  text-align: left !important;
+}
+
+#beyond .beyond-quote-block .bq-intro {
+  font-size: 16px !important;
+  color: #4f4f4f !important;
+  margin-bottom: 10px !important;
+  font-weight: 400 !important;
+}
+
+#beyond .beyond-quote-block .bq {
+  font-family: 'Anton', sans-serif !important;
+  font-size: clamp(28px, 2.7vw, 44px) !important;
+  line-height: 1.04 !important;
+  color: #F26522 !important;
+  letter-spacing: 0px !important;
+  margin-bottom: 16px !important;
+  white-space: nowrap !important;
+}
+
+#beyond .beyond-quote-block .b-bio {
+  font-size: 19px !important;
+  line-height: 1.55 !important;
+  color: #1a1a1a !important;
+  max-width: 94% !important;
+}
+
+/* Right side information alignment */
+#beyond .b-row {
+  padding: 12px 0 14px !important;
+  border-bottom: 1px solid #e5e5e5 !important;
+}
+
+#beyond .b-row .rl {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  margin-bottom: 6px !important;
+  color: #111 !important;
+}
+
+#beyond .b-row .rv {
+  font-size: 18px !important;
+  line-height: 1.45 !important;
+  color: #222 !important;
+}
+
+#beyond .ctags {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  margin-top: 10px !important;
+}
+
+#beyond .ctag {
+  border: 2px solid #F26522 !important;
+  border-radius: 100px !important;
+  padding: 8px 16px !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: #F26522 !important;
+  background: transparent !important;
+}
+
+@media (max-width: 900px) {
+  #beyond .beyond-grid {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+
+  #beyond .beyond-photo,
+  #beyond .beyond-photo.media-provision {
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: 1 / 1 !important;
+  }
+
+  #beyond .beyond-quote-block .bq {
+    white-space: normal !important;
+  }
+}
+
+
+/* Final fixes: Beyond quote, colleague tag hover, About slide */
+
+/* Keep loyalty quote inside the left half without overlap */
+#beyond .beyond-quote-block .bq {
+  font-size: clamp(22px, 2.05vw, 34px) !important;
+  line-height: 1.08 !important;
+  white-space: normal !important;
+  max-width: 100% !important;
+  overflow-wrap: normal !important;
+}
+
+/* Colleague tags: orange fill on hover */
+#beyond .ctag:hover {
+  background: var(--orange) !important;
+  color: #fff !important;
+  border-color: var(--orange) !important;
+  transform: translateY(-2px) scale(1.03) !important;
+  box-shadow: 0 8px 18px rgba(242,101,34,0.18) !important;
+}
+
+/* About slide: move below nav and reduce card/text size */
+#slide-2 {
+  align-items: flex-start !important;
+  padding-top: 138px !important;
+}
+
+#slide-2 .s-head {
+  font-size: clamp(34px, 4.2vw, 58px) !important;
+  margin-bottom: 20px !important;
+}
+
+#slide-2 .about-card {
+  font-size: 21px !important;
+  line-height: 1.65 !important;
+  padding: 34px 40px !important;
+  min-height: 440px !important;
+  width: calc(56% - 6px) !important;
+  max-width: calc(56% - 6px) !important;
+}
+
+#slide-2 .about-card p {
+  margin-bottom: 13px !important;
+}
+
+#slide-2 .about-list li {
+  margin-bottom: 6px !important;
+}
+
+@media (max-width:900px) {
+  #slide-2 {
+    padding-top: 70px !important;
+  }
+
+  #slide-2 .about-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: auto !important;
+    font-size: 20px !important;
+    padding: 30px 26px !important;
+  }
+}
+
+
+/* Final alignment + scaling refinements */
+
+/* Increase Skills background video by additional 10% */
+.skills-video-bg video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  transform: scale(1.04) !important;
+}
+
+/* Unified left alignment for all section headings */
+#slide-2 .s-head,
+#slide-3 .s-head,
+#work .work-head,
+#skill .s-head {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  position: relative !important;
+  left: 0 !important;
+  text-align: left !important;
+}
+
+/* Make Operational Impact title same size as others */
+#slide-3 .s-head {
+  font-size: clamp(34px, 4.2vw, 58px) !important;
+  line-height: 1 !important;
+  letter-spacing: 1px !important;
+  margin-bottom: 26px !important;
+}
+
+/* Ensure About + Operational Impact align to same starting edge as Skills */
+#slide-2,
+#slide-3 {
+  padding-left: 8% !important;
+}
+
+#slide-2 .about-card,
+#slide-3 .impact-grid {
+  margin-left: 0 !important;
+}
+
+#work .work-head,
+#skill .s-head {
+  margin-left: 0 !important;
+}
+
+
+/* Slight left shift for Skills background video */
+.skills-video-bg video {
+  transform: scale(1.04) translateX(-3%) !important;
+  transform-origin: center center !important;
+}
+
+
+/* Remove gap between Skills and Beyond the Portfolio */
+#skill {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.skills-wrap {
+  margin-bottom: 0 !important;
+}
+
+#beyond {
+  margin-top: 0 !important;
+  padding-top: 18px !important;
+}
+
 </style>
 </head>
 <body>
@@ -1483,7 +2143,7 @@ All layout, spacing, sections, and styling have been retained.
 
   <nav id="main-nav">
     <!-- VA Logo — placeholder box, replace with <img> when ready -->
-    <img src="./assets/va-logo.svg" data-local-src="./assets/va-logo.svg" data-media-slot="logo" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="VA" onclick="window.location.reload()" style="height:48px;width:48px;object-fit:contain;display:block;cursor:pointer;border-radius:10px;" title="Vijay Anandasamy">
+    <img src="./Website logo.png" data-local-src="./Website logo.png" data-media-slot="logo" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="VA" onclick="window.location.reload()" style="height:48px;width:48px;object-fit:contain;display:block;cursor:pointer;border-radius:10px;" title="Vijay Anandasamy">
 
     <div class="nav-pills">
       <a href="#about" class="active" onclick="navToSection('about');setActive(this);return false;">About</a>
@@ -1494,9 +2154,9 @@ All layout, spacing, sections, and styling have been retained.
 
     <div class="nav-social nav-fade-group">
       <!-- LinkedIn placeholder -->
-      <a href="https://www.linkedin.com/in/vijay-anandasamy" target="_blank" rel="noopener" title="LinkedIn"><img src="./assets/linkedin-icon.svg" data-local-src="./assets/linkedin-icon.svg" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
+      <a href="https://www.linkedin.com/in/vijay-anandasamy" target="_blank" rel="noopener" title="LinkedIn"><img src="./link logo.png" data-local-src="./link logo.png" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
       <!-- Instagram placeholder -->
-      <a href="https://www.instagram.com/vijayanandasamy8/?hl=en" target="_blank" rel="noopener" title="Instagram"><img src="./assets/instagram-icon.svg" data-local-src="./assets/instagram-icon.svg" data-media-slot="instagram-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Instagram" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
+      <a href="https://www.instagram.com/vijayanandasamy8/?hl=en" target="_blank" rel="noopener" title="Instagram"><img src="./Instagram logo.png" data-local-src="./Instagram logo.png" data-media-slot="instagram-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Instagram" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
     </div>
   </nav>
 
@@ -1511,7 +2171,7 @@ All layout, spacing, sections, and styling have been retained.
         <video class="hero-char-video"
                autoplay muted loop playsinline
                preload="auto"
-               disablepictureinpicture>
+               disablepictureinpicture autoplay muted loop playsinline><source src="./Flow_202605051947.mp4" type="video/mp4">
           <source src="./assets/hero-character.webm" data-local-src="./assets/hero-character.webm" data-media-slot="hero-video" type="video/webm">
           <source src="./assets/hero-character.mp4" data-local-src="./assets/hero-character.mp4" data-media-slot="hero-video" type="video/mp4">
         </video>
@@ -1523,8 +2183,8 @@ All layout, spacing, sections, and styling have been retained.
       <div class="hero-slide slide-active" id="slide-0">
         <div class="quote-block">
           <div class="quote-main">"Experience without theory is blind,
-but theory without experience is mere
-intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
+but theory without experience is
+mere intellectual play"<span class="quote-attr"> - Immanuel Kant</span></div>
         </div>
       </div>
 
@@ -1589,7 +2249,7 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
     <div class="work-head">Selected Work</div>
 
     <div class="work-item" onclick="goTo('page-flow')">
-      <div class="work-img-col media-provision" data-media-slot="zoho-flow-image" data-local-src="./assets/zoho-flow.jpg" aria-label="Zoho Flow image slot"><!-- Add image later using CSS background-image:url('./assets/zoho-flow.jpg') or place an <img> here. --></div>
+      <div class="work-img-col media-provision" data-media-slot="zoho-flow-image" data-local-src="./specified work 1.png" aria-label="Zoho Flow image slot"><!-- Add image later using CSS background-image:url('./specified work 1.png') or place an <img> here. --></div>
       <div class="work-text-col">
         <div class="work-meta">India <span class="dot">◆</span> Global <span class="dot">◆</span> Nov 2023 to May 2026</div>
         <div class="work-title">Zoho Flow</div>
@@ -1608,7 +2268,7 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
     </div>
 
     <div class="work-item" onclick="goTo('page-jumpstart')">
-      <div class="work-img-col media-provision" data-media-slot="zoho-jumpstart-image" data-local-src="./assets/zoho-jumpstart.jpg" aria-label="Zoho Jumpstart image slot"><!-- Add image later using CSS background-image:url('./assets/zoho-jumpstart.jpg') or place an <img> here. --></div>
+      <div class="work-img-col media-provision" data-media-slot="zoho-jumpstart-image" data-local-src="./Specified work 2.png" aria-label="Zoho Jumpstart image slot"><!-- Add image later using CSS background-image:url('./Specified work 2.png') or place an <img> here. --></div>
       <div class="work-text-col">
         <div class="work-meta">India <span class="dot">◆</span> Global <span class="dot">◆</span> Jun 2023 to Nov 2023</div>
         <div class="work-title">Zoho Jumpstart</div>
@@ -1627,7 +2287,7 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
     </div>
 
     <div class="work-item" onclick="goTo('page-concierge')">
-      <div class="work-img-col media-provision" data-media-slot="zoho-concierge-image" data-local-src="./assets/zoho-concierge.jpg" aria-label="Zoho Concierge image slot"><!-- Add image later using CSS background-image:url('./assets/zoho-concierge.jpg') or place an <img> here. --></div>
+      <div class="work-img-col media-provision" data-media-slot="zoho-concierge-image" data-local-src="./Specified work 3.png" aria-label="Zoho Concierge image slot"><!-- Add image later using CSS background-image:url('./Specified work 3.png') or place an <img> here. --></div>
       <div class="work-text-col">
         <div class="work-meta">India <span class="dot">◆</span> Global <span class="dot">◆</span> Apr 2023 to Nov 2023</div>
         <div class="work-title">Zoho Concierge</div>
@@ -1646,7 +2306,7 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
     </div>
 
     <div class="work-item" onclick="goTo('page-dharma')">
-      <div class="work-img-col media-provision" data-media-slot="dharma-seva-trust-image" data-local-src="./assets/dharma-seva-trust.jpg" aria-label="Dharma Seva Trust image slot"><!-- Add image later using CSS background-image:url('./assets/dharma-seva-trust.jpg') or place an <img> here. --></div>
+      <div class="work-img-col media-provision" data-media-slot="dharma-seva-trust-image" data-local-src="./Specified work 4.png" aria-label="Dharma Seva Trust image slot"><!-- Add image later using CSS background-image:url('./Specified work 4.png') or place an <img> here. --></div>
       <div class="work-text-col">
         <div class="work-meta">India <span class="dot">◆</span> Dec 2022 to Present</div>
         <div class="work-title">Dharma Seva Trust: Social &amp; Event Operations</div>
@@ -1673,8 +2333,8 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
     <div class="skills-wrap">
       <div class="skills-video-bg" data-media-slot="skills-loop-video">
         <video autoplay muted loop playsinline preload="metadata">
-          <source src="./assets/skills-loop.webm" type="video/webm">
-          <source src="./assets/skills-loop.mp4" type="video/mp4">
+          <source src="./sill section video.mp4" type="video/webm">
+          <source src="./sill section video.mp4" type="video/mp4">
         </video>
       </div>
       <div class="skill-orbs">
@@ -1703,8 +2363,13 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
   <section id="beyond">
     <div class="beyond-head">Beyond the portfolio</div>
     <div class="beyond-grid">
-      <div>
-        <div class="beyond-photo media-provision" data-media-slot="beyond-profile-image" data-local-src="./assets/beyond-profile.jpg"><!-- Add Beyond photo later using CSS background-image:url('./assets/beyond-profile.jpg') or place an <img> here. --></div>
+      <div class="beyond-left-stack">
+        <div class="beyond-photo media-provision" data-media-slot="beyond-profile-image" data-local-src="./beyond the portfolio - headshot.png"><!-- Add Beyond photo later using CSS background-image:url('./beyond the portfolio - headshot.png') or place an <img> here. --></div>
+        <div class="beyond-quote-block">
+          <p class="bq-intro">I strongly relate to the idea:</p>
+          <p class="bq">"Loyalty is a two-way street. If I expect it, I give it."</p>
+          <p class="b-bio">That's how I approach everything—people, work, and opportunities. I've always tried to give back to what has supported me—whether it's the people I work with, the organizations I've been part of, or the systems I've grown in.</p>
+        </div>
       </div>
       <div>
         <div class="b-row"><div class="rl">Based in:</div><div class="rv">Chennai, Tamil Nadu, India</div></div>
@@ -1720,11 +2385,6 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
             <span class="ctag">Perfectionist</span><span class="ctag">Thinker</span>
             <span class="ctag">Curious</span><span class="ctag">Competitive</span>
           </div>
-        </div>
-        <div class="beyond-quote-block">
-          <p class="bq-intro">I strongly relate to the idea:</p>
-          <p class="bq">"Loyalty is a two-way street. If I expect it, I give it."</p>
-          <p class="b-bio">That's how I approach everything—people, work, and opportunities. I've always tried to give back to what has supported me—whether it's the people I work with, the organizations I've been part of, or the systems I've grown in.</p>
         </div>
       </div>
     </div>
@@ -1743,12 +2403,12 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
 
     <!-- Email row -->
     <div class="contact-row">
-      <img src="./assets/email-icon.svg" data-local-src="./assets/email-icon.svg" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
+      <img src="./mail logo.png" data-local-src="./mail logo.png" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
       <a href="mailto:vijayanandasamy@gmail.com">vijayanandasamy@gmail.com</a>
     </div>
     <!-- Phone row -->
     <div class="contact-row" style="margin-bottom:36px;">
-      <img src="./assets/phone-icon.svg" data-local-src="./assets/phone-icon.svg" data-media-slot="phone-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Phone" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
+      <img src="./mobile favicon.png" data-local-src="./mobile favicon.png" data-media-slot="phone-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Phone" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
       <span>+91 9043922545</span>
     </div>
 
@@ -1756,15 +2416,15 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
     <div class="footer-icons">
       <!-- Circle 1: WhatsApp -->
       <a href="https://wa.me/919043922545" target="_blank" rel="noopener" class="fi-circle" title="WhatsApp">
-        <img src="./assets/whatsapp-icon.svg" data-local-src="./assets/whatsapp-icon.svg" data-media-slot="whatsapp-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="WhatsApp" style="width:44px;height:44px;object-fit:contain;border-radius:50%;">
+        <img src="./whatsapp.png" data-local-src="./whatsapp.png" data-media-slot="whatsapp-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="WhatsApp" style="width:44px;height:44px;object-fit:contain;border-radius:50%;">
       </a>
       <!-- Circle 2: Email -->
       <a href="mailto:vijayanandasamy@gmail.com" class="fi-circle" title="Email">
-        <img src="./assets/email-icon.svg" data-local-src="./assets/email-icon.svg" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:40px;height:40px;object-fit:contain;">
+        <img src="./final mail logo.png" data-local-src="./mail logo.png" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:40px;height:40px;object-fit:contain;">
       </a>
       <!-- Circle 3: LinkedIn -->
       <a href="https://www.linkedin.com/in/vijay-anandasamy" target="_blank" rel="noopener" class="fi-circle" title="LinkedIn">
-        <img src="./assets/linkedin-icon.svg" data-local-src="./assets/linkedin-icon.svg" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:40px;height:40px;object-fit:contain;border-radius:8px;">
+        <img src="./link logo.png" data-local-src="./link logo.png" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:40px;height:40px;object-fit:contain;border-radius:8px;">
       </a>
     </div>
     <p style="margin-top:40px;font-family:'Poppins',sans-serif;font-size:13px;color:#bbb;">© 2025 Vijay Anandasamy. All rights reserved.</p>
@@ -1774,7 +2434,7 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
 
 <div class="page" id="page-flow">
   <nav>
-  <img src="./assets/va-logo.svg" data-local-src="./assets/va-logo.svg" data-media-slot="logo" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="VA" onclick="window.location.reload()" style="height:48px;width:48px;object-fit:contain;display:block;cursor:pointer;border-radius:10px;" title="Vijay Anandasamy">
+  <img src="./Website logo.png" data-local-src="./Website logo.png" data-media-slot="logo" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="VA" onclick="window.location.reload()" style="height:48px;width:48px;object-fit:contain;display:block;cursor:pointer;border-radius:10px;" title="Vijay Anandasamy">
   <div class="nav-pills">
     <a href="#" onclick="goTo('page-main');return false;">About</a>
     <a class="active">Work</a>
@@ -1782,13 +2442,13 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
     <a href="#" onclick="navToMain('contact');return false;">Contact</a>
   </div>
   <div class="nav-social nav-fade-group">
-    <a href="https://www.linkedin.com/in/vijay-anandasamy" target="_blank" rel="noopener" title="LinkedIn"><img src="./assets/linkedin-icon.svg" data-local-src="./assets/linkedin-icon.svg" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
-    <a href="https://www.instagram.com/vijayanandasamy8/?hl=en" target="_blank" rel="noopener" title="Instagram"><img src="./assets/instagram-icon.svg" data-local-src="./assets/instagram-icon.svg" data-media-slot="instagram-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Instagram" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
+    <a href="https://www.linkedin.com/in/vijay-anandasamy" target="_blank" rel="noopener" title="LinkedIn"><img src="./link logo.png" data-local-src="./link logo.png" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
+    <a href="https://www.instagram.com/vijayanandasamy8/?hl=en" target="_blank" rel="noopener" title="Instagram"><img src="./Instagram logo.png" data-local-src="./Instagram logo.png" data-media-slot="instagram-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Instagram" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
   </div>
 </nav>
   <a class="back-btn" href="#" onclick="goTo('page-main');return false;">← Back</a>
   <div style="padding-top:0;">
-    <div class="sa-hero media-provision" data-media-slot="zoho-flow-image" data-local-src="./assets/zoho-flow.jpg"><!-- Add hero image later using CSS background-image:url('./assets/zoho-flow.jpg') or place an <img> here. -->
+    <div class="sa-hero media-provision" data-media-slot="zoho-flow-image" data-local-src="./specified work 1.png"><!-- Add hero image later using CSS background-image:url('./specified work 1.png') or place an <img> here. -->
       <div class="sa-hero-overlay">
         <div class="sa-tags"><span class="sa-tag">#AI-Powered Automation</span><span class="sa-tag">#Go-To-Market</span><span class="sa-tag">#API &amp; Integration Thinking</span></div>
         <div class="sa-title">Zoho Flow</div>
@@ -1833,12 +2493,12 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
 
     <!-- Email row -->
     <div class="contact-row">
-      <img src="./assets/email-icon.svg" data-local-src="./assets/email-icon.svg" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
+      <img src="./mail logo.png" data-local-src="./mail logo.png" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
       <a href="mailto:vijayanandasamy@gmail.com">vijayanandasamy@gmail.com</a>
     </div>
     <!-- Phone row -->
     <div class="contact-row" style="margin-bottom:36px;">
-      <img src="./assets/phone-icon.svg" data-local-src="./assets/phone-icon.svg" data-media-slot="phone-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Phone" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
+      <img src="./mobile favicon.png" data-local-src="./mobile favicon.png" data-media-slot="phone-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Phone" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
       <span>+91 9043922545</span>
     </div>
 
@@ -1846,15 +2506,15 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
     <div class="footer-icons">
       <!-- Circle 1: WhatsApp -->
       <a href="https://wa.me/919043922545" target="_blank" rel="noopener" class="fi-circle" title="WhatsApp">
-        <img src="./assets/whatsapp-icon.svg" data-local-src="./assets/whatsapp-icon.svg" data-media-slot="whatsapp-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="WhatsApp" style="width:44px;height:44px;object-fit:contain;border-radius:50%;">
+        <img src="./whatsapp.png" data-local-src="./whatsapp.png" data-media-slot="whatsapp-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="WhatsApp" style="width:44px;height:44px;object-fit:contain;border-radius:50%;">
       </a>
       <!-- Circle 2: Email -->
       <a href="mailto:vijayanandasamy@gmail.com" class="fi-circle" title="Email">
-        <img src="./assets/email-icon.svg" data-local-src="./assets/email-icon.svg" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:40px;height:40px;object-fit:contain;">
+        <img src="./final mail logo.png" data-local-src="./mail logo.png" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:40px;height:40px;object-fit:contain;">
       </a>
       <!-- Circle 3: LinkedIn -->
       <a href="https://www.linkedin.com/in/vijay-anandasamy" target="_blank" rel="noopener" class="fi-circle" title="LinkedIn">
-        <img src="./assets/linkedin-icon.svg" data-local-src="./assets/linkedin-icon.svg" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:40px;height:40px;object-fit:contain;border-radius:8px;">
+        <img src="./link logo.png" data-local-src="./link logo.png" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:40px;height:40px;object-fit:contain;border-radius:8px;">
       </a>
     </div>
     <p style="margin-top:40px;font-family:'Poppins',sans-serif;font-size:13px;color:#bbb;">© 2025 Vijay Anandasamy. All rights reserved.</p>
@@ -1864,7 +2524,7 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
 
 <div class="page" id="page-jumpstart">
   <nav>
-  <img src="./assets/va-logo.svg" data-local-src="./assets/va-logo.svg" data-media-slot="logo" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="VA" onclick="window.location.reload()" style="height:48px;width:48px;object-fit:contain;display:block;cursor:pointer;border-radius:10px;" title="Vijay Anandasamy">
+  <img src="./Website logo.png" data-local-src="./Website logo.png" data-media-slot="logo" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="VA" onclick="window.location.reload()" style="height:48px;width:48px;object-fit:contain;display:block;cursor:pointer;border-radius:10px;" title="Vijay Anandasamy">
   <div class="nav-pills">
     <a href="#" onclick="goTo('page-main');return false;">About</a>
     <a class="active">Work</a>
@@ -1872,13 +2532,13 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
     <a href="#" onclick="navToMain('contact');return false;">Contact</a>
   </div>
   <div class="nav-social nav-fade-group">
-    <a href="https://www.linkedin.com/in/vijay-anandasamy" target="_blank" rel="noopener" title="LinkedIn"><img src="./assets/linkedin-icon.svg" data-local-src="./assets/linkedin-icon.svg" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
-    <a href="https://www.instagram.com/vijayanandasamy8/?hl=en" target="_blank" rel="noopener" title="Instagram"><img src="./assets/instagram-icon.svg" data-local-src="./assets/instagram-icon.svg" data-media-slot="instagram-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Instagram" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
+    <a href="https://www.linkedin.com/in/vijay-anandasamy" target="_blank" rel="noopener" title="LinkedIn"><img src="./link logo.png" data-local-src="./link logo.png" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
+    <a href="https://www.instagram.com/vijayanandasamy8/?hl=en" target="_blank" rel="noopener" title="Instagram"><img src="./Instagram logo.png" data-local-src="./Instagram logo.png" data-media-slot="instagram-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Instagram" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
   </div>
 </nav>
   <a class="back-btn" href="#" onclick="goTo('page-main');return false;">← Back</a>
   <div style="padding-top:0;">
-    <div class="sa-hero media-provision" data-media-slot="zoho-jumpstart-image" data-local-src="./assets/zoho-jumpstart.jpg"><!-- Add hero image later using CSS background-image:url('./assets/zoho-jumpstart.jpg') or place an <img> here. -->
+    <div class="sa-hero media-provision" data-media-slot="zoho-jumpstart-image" data-local-src="./Specified work 2.png"><!-- Add hero image later using CSS background-image:url('./Specified work 2.png') or place an <img> here. -->
       <div class="sa-hero-overlay">
         <div class="sa-tags"><span class="sa-tag">#Solution Consulting</span><span class="sa-tag">#Cross-Platform System Design</span><span class="sa-tag">#Implementation</span></div>
         <div class="sa-title">Zoho Jumpstart</div>
@@ -1923,12 +2583,12 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
 
     <!-- Email row -->
     <div class="contact-row">
-      <img src="./assets/email-icon.svg" data-local-src="./assets/email-icon.svg" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
+      <img src="./mail logo.png" data-local-src="./mail logo.png" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
       <a href="mailto:vijayanandasamy@gmail.com">vijayanandasamy@gmail.com</a>
     </div>
     <!-- Phone row -->
     <div class="contact-row" style="margin-bottom:36px;">
-      <img src="./assets/phone-icon.svg" data-local-src="./assets/phone-icon.svg" data-media-slot="phone-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Phone" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
+      <img src="./mobile favicon.png" data-local-src="./mobile favicon.png" data-media-slot="phone-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Phone" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
       <span>+91 9043922545</span>
     </div>
 
@@ -1936,15 +2596,15 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
     <div class="footer-icons">
       <!-- Circle 1: WhatsApp -->
       <a href="https://wa.me/919043922545" target="_blank" rel="noopener" class="fi-circle" title="WhatsApp">
-        <img src="./assets/whatsapp-icon.svg" data-local-src="./assets/whatsapp-icon.svg" data-media-slot="whatsapp-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="WhatsApp" style="width:44px;height:44px;object-fit:contain;border-radius:50%;">
+        <img src="./whatsapp.png" data-local-src="./whatsapp.png" data-media-slot="whatsapp-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="WhatsApp" style="width:44px;height:44px;object-fit:contain;border-radius:50%;">
       </a>
       <!-- Circle 2: Email -->
       <a href="mailto:vijayanandasamy@gmail.com" class="fi-circle" title="Email">
-        <img src="./assets/email-icon.svg" data-local-src="./assets/email-icon.svg" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:40px;height:40px;object-fit:contain;">
+        <img src="./final mail logo.png" data-local-src="./mail logo.png" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:40px;height:40px;object-fit:contain;">
       </a>
       <!-- Circle 3: LinkedIn -->
       <a href="https://www.linkedin.com/in/vijay-anandasamy" target="_blank" rel="noopener" class="fi-circle" title="LinkedIn">
-        <img src="./assets/linkedin-icon.svg" data-local-src="./assets/linkedin-icon.svg" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:40px;height:40px;object-fit:contain;border-radius:8px;">
+        <img src="./link logo.png" data-local-src="./link logo.png" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:40px;height:40px;object-fit:contain;border-radius:8px;">
       </a>
     </div>
     <p style="margin-top:40px;font-family:'Poppins',sans-serif;font-size:13px;color:#bbb;">© 2025 Vijay Anandasamy. All rights reserved.</p>
@@ -1954,7 +2614,7 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
 
 <div class="page" id="page-concierge">
   <nav>
-  <img src="./assets/va-logo.svg" data-local-src="./assets/va-logo.svg" data-media-slot="logo" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="VA" onclick="window.location.reload()" style="height:48px;width:48px;object-fit:contain;display:block;cursor:pointer;border-radius:10px;" title="Vijay Anandasamy">
+  <img src="./Website logo.png" data-local-src="./Website logo.png" data-media-slot="logo" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="VA" onclick="window.location.reload()" style="height:48px;width:48px;object-fit:contain;display:block;cursor:pointer;border-radius:10px;" title="Vijay Anandasamy">
   <div class="nav-pills">
     <a href="#" onclick="goTo('page-main');return false;">About</a>
     <a class="active">Work</a>
@@ -1962,13 +2622,13 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
     <a href="#" onclick="navToMain('contact');return false;">Contact</a>
   </div>
   <div class="nav-social nav-fade-group">
-    <a href="https://www.linkedin.com/in/vijay-anandasamy" target="_blank" rel="noopener" title="LinkedIn"><img src="./assets/linkedin-icon.svg" data-local-src="./assets/linkedin-icon.svg" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
-    <a href="https://www.instagram.com/vijayanandasamy8/?hl=en" target="_blank" rel="noopener" title="Instagram"><img src="./assets/instagram-icon.svg" data-local-src="./assets/instagram-icon.svg" data-media-slot="instagram-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Instagram" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
+    <a href="https://www.linkedin.com/in/vijay-anandasamy" target="_blank" rel="noopener" title="LinkedIn"><img src="./link logo.png" data-local-src="./link logo.png" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
+    <a href="https://www.instagram.com/vijayanandasamy8/?hl=en" target="_blank" rel="noopener" title="Instagram"><img src="./Instagram logo.png" data-local-src="./Instagram logo.png" data-media-slot="instagram-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Instagram" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
   </div>
 </nav>
   <a class="back-btn" href="#" onclick="goTo('page-main');return false;">← Back</a>
   <div style="padding-top:0;">
-    <div class="sa-hero media-provision" data-media-slot="zoho-concierge-image" data-local-src="./assets/zoho-concierge.jpg"><!-- Add hero image later using CSS background-image:url('./assets/zoho-concierge.jpg') or place an <img> here. -->
+    <div class="sa-hero media-provision" data-media-slot="zoho-concierge-image" data-local-src="./Specified work 3.png"><!-- Add hero image later using CSS background-image:url('./Specified work 3.png') or place an <img> here. -->
       <div class="sa-hero-overlay">
         <div class="sa-tags"><span class="sa-tag">#Product Ecosystem Mastery</span><span class="sa-tag">#System Thinking</span><span class="sa-tag">#Solution Discovery</span></div>
         <div class="sa-title">Zoho Concierge</div>
@@ -2013,12 +2673,12 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
 
     <!-- Email row -->
     <div class="contact-row">
-      <img src="./assets/email-icon.svg" data-local-src="./assets/email-icon.svg" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
+      <img src="./mail logo.png" data-local-src="./mail logo.png" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
       <a href="mailto:vijayanandasamy@gmail.com">vijayanandasamy@gmail.com</a>
     </div>
     <!-- Phone row -->
     <div class="contact-row" style="margin-bottom:36px;">
-      <img src="./assets/phone-icon.svg" data-local-src="./assets/phone-icon.svg" data-media-slot="phone-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Phone" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
+      <img src="./mobile favicon.png" data-local-src="./mobile favicon.png" data-media-slot="phone-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Phone" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
       <span>+91 9043922545</span>
     </div>
 
@@ -2026,15 +2686,15 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
     <div class="footer-icons">
       <!-- Circle 1: WhatsApp -->
       <a href="https://wa.me/919043922545" target="_blank" rel="noopener" class="fi-circle" title="WhatsApp">
-        <img src="./assets/whatsapp-icon.svg" data-local-src="./assets/whatsapp-icon.svg" data-media-slot="whatsapp-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="WhatsApp" style="width:44px;height:44px;object-fit:contain;border-radius:50%;">
+        <img src="./whatsapp.png" data-local-src="./whatsapp.png" data-media-slot="whatsapp-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="WhatsApp" style="width:44px;height:44px;object-fit:contain;border-radius:50%;">
       </a>
       <!-- Circle 2: Email -->
       <a href="mailto:vijayanandasamy@gmail.com" class="fi-circle" title="Email">
-        <img src="./assets/email-icon.svg" data-local-src="./assets/email-icon.svg" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:40px;height:40px;object-fit:contain;">
+        <img src="./final mail logo.png" data-local-src="./mail logo.png" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:40px;height:40px;object-fit:contain;">
       </a>
       <!-- Circle 3: LinkedIn -->
       <a href="https://www.linkedin.com/in/vijay-anandasamy" target="_blank" rel="noopener" class="fi-circle" title="LinkedIn">
-        <img src="./assets/linkedin-icon.svg" data-local-src="./assets/linkedin-icon.svg" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:40px;height:40px;object-fit:contain;border-radius:8px;">
+        <img src="./link logo.png" data-local-src="./link logo.png" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:40px;height:40px;object-fit:contain;border-radius:8px;">
       </a>
     </div>
     <p style="margin-top:40px;font-family:'Poppins',sans-serif;font-size:13px;color:#bbb;">© 2025 Vijay Anandasamy. All rights reserved.</p>
@@ -2044,7 +2704,7 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
 
 <div class="page" id="page-dharma">
   <nav>
-  <img src="./assets/va-logo.svg" data-local-src="./assets/va-logo.svg" data-media-slot="logo" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="VA" onclick="window.location.reload()" style="height:48px;width:48px;object-fit:contain;display:block;cursor:pointer;border-radius:10px;" title="Vijay Anandasamy">
+  <img src="./Website logo.png" data-local-src="./Website logo.png" data-media-slot="logo" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="VA" onclick="window.location.reload()" style="height:48px;width:48px;object-fit:contain;display:block;cursor:pointer;border-radius:10px;" title="Vijay Anandasamy">
   <div class="nav-pills">
     <a href="#" onclick="goTo('page-main');return false;">About</a>
     <a class="active">Work</a>
@@ -2052,13 +2712,13 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
     <a href="#" onclick="navToMain('contact');return false;">Contact</a>
   </div>
   <div class="nav-social nav-fade-group">
-    <a href="https://www.linkedin.com/in/vijay-anandasamy" target="_blank" rel="noopener" title="LinkedIn"><img src="./assets/linkedin-icon.svg" data-local-src="./assets/linkedin-icon.svg" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
-    <a href="https://www.instagram.com/vijayanandasamy8/?hl=en" target="_blank" rel="noopener" title="Instagram"><img src="./assets/instagram-icon.svg" data-local-src="./assets/instagram-icon.svg" data-media-slot="instagram-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Instagram" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
+    <a href="https://www.linkedin.com/in/vijay-anandasamy" target="_blank" rel="noopener" title="LinkedIn"><img src="./link logo.png" data-local-src="./link logo.png" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
+    <a href="https://www.instagram.com/vijayanandasamy8/?hl=en" target="_blank" rel="noopener" title="Instagram"><img src="./Instagram logo.png" data-local-src="./Instagram logo.png" data-media-slot="instagram-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Instagram" style="width:32px;height:32px;object-fit:contain;display:block;"></a>
   </div>
 </nav>
   <a class="back-btn" href="#" onclick="goTo('page-main');return false;">← Back</a>
   <div style="padding-top:0;">
-    <div class="sa-hero media-provision" data-media-slot="dharma-seva-trust-image" data-local-src="./assets/dharma-seva-trust.jpg"><!-- Add hero image later using CSS background-image:url('./assets/dharma-seva-trust.jpg') or place an <img> here. -->
+    <div class="sa-hero media-provision" data-media-slot="dharma-seva-trust-image" data-local-src="./Specified work 4.png"><!-- Add hero image later using CSS background-image:url('./Specified work 4.png') or place an <img> here. -->
       <div class="sa-hero-overlay">
         <div class="sa-tags"><span class="sa-tag">#Digital Growth</span><span class="sa-tag">#Video Production</span><span class="sa-tag">#Social Media Scaling</span></div>
         <div class="sa-title">Dharma Seva Trust</div>
@@ -2103,12 +2763,12 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
 
     <!-- Email row -->
     <div class="contact-row">
-      <img src="./assets/email-icon.svg" data-local-src="./assets/email-icon.svg" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
+      <img src="./mail logo.png" data-local-src="./mail logo.png" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
       <a href="mailto:vijayanandasamy@gmail.com">vijayanandasamy@gmail.com</a>
     </div>
     <!-- Phone row -->
     <div class="contact-row" style="margin-bottom:36px;">
-      <img src="./assets/phone-icon.svg" data-local-src="./assets/phone-icon.svg" data-media-slot="phone-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Phone" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
+      <img src="./mobile favicon.png" data-local-src="./mobile favicon.png" data-media-slot="phone-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Phone" style="width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0;">
       <span>+91 9043922545</span>
     </div>
 
@@ -2116,15 +2776,15 @@ intellectual play"<span class="quote-attr">— Immanuel Kant</span></div>
     <div class="footer-icons">
       <!-- Circle 1: WhatsApp -->
       <a href="https://wa.me/919043922545" target="_blank" rel="noopener" class="fi-circle" title="WhatsApp">
-        <img src="./assets/whatsapp-icon.svg" data-local-src="./assets/whatsapp-icon.svg" data-media-slot="whatsapp-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="WhatsApp" style="width:44px;height:44px;object-fit:contain;border-radius:50%;">
+        <img src="./whatsapp.png" data-local-src="./whatsapp.png" data-media-slot="whatsapp-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="WhatsApp" style="width:44px;height:44px;object-fit:contain;border-radius:50%;">
       </a>
       <!-- Circle 2: Email -->
       <a href="mailto:vijayanandasamy@gmail.com" class="fi-circle" title="Email">
-        <img src="./assets/email-icon.svg" data-local-src="./assets/email-icon.svg" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:40px;height:40px;object-fit:contain;">
+        <img src="./final mail logo.png" data-local-src="./mail logo.png" data-media-slot="email-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="Email" style="width:40px;height:40px;object-fit:contain;">
       </a>
       <!-- Circle 3: LinkedIn -->
       <a href="https://www.linkedin.com/in/vijay-anandasamy" target="_blank" rel="noopener" class="fi-circle" title="LinkedIn">
-        <img src="./assets/linkedin-icon.svg" data-local-src="./assets/linkedin-icon.svg" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:40px;height:40px;object-fit:contain;border-radius:8px;">
+        <img src="./link logo.png" data-local-src="./link logo.png" data-media-slot="linkedin-icon" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" alt="LinkedIn" style="width:40px;height:40px;object-fit:contain;border-radius:8px;">
       </a>
     </div>
     <p style="margin-top:40px;font-family:'Poppins',sans-serif;font-size:13px;color:#bbb;">© 2025 Vijay Anandasamy. All rights reserved.</p>
